@@ -15,7 +15,10 @@ class PartituraApp:
         self.seleccionando = False
         self.start_x = self.start_y = 0
         self.end_x = self.end_y = 0
-        self.factor_escala = 1  # Factor de escala para el tamaño de la imagen
+        self.factor_escala = 1.0
+        self.zoom_step = 0.1
+        self.max_width = 800
+        self.max_height = 600
         self.cargar_imagen()
         self.crear_interfaz()
 
@@ -33,25 +36,14 @@ class PartituraApp:
         self.ventana.title("Partitura manuscrita")
         self.ventana.attributes('-topmost', True)
 
-        # Redimensionar imagen y calcular factor de escala
-        max_width, max_height = 500, 500
-        img_width, img_height = self.imagen_original.size
-        self.factor_escala = min(max_width / img_width, max_height / img_height)
-        img_resized = self.imagen_original.resize(
-            (int(img_width * self.factor_escala), int(img_height * self.factor_escala))
-        )
-        self.img_tk = ImageTk.PhotoImage(img_resized)
+        self.mostrar_imagen()
 
-        self.panel = tk.Label(self.ventana, image=self.img_tk)
-        self.panel.pack(side="top", fill="both", expand="yes")
-
-        self.panel.bind("<ButtonPress-1>", self.iniciar_seleccion)
-        self.panel.bind("<B1-Motion>", self.arrastrar_seleccion)
-        self.panel.bind("<ButtonRelease-1>", self.finalizar_seleccion)
+        self.ventana.bind("<MouseWheel>", self.ajustar_zoom)
 
         button_frame = tk.Frame(self.ventana)
         button_frame.pack(side="bottom", fill="x", pady=10)
 
+        tk.Button(button_frame, text="Confirmar Recorte", command=self.confirmar_recorte).pack(side="left", padx=5)
         tk.Button(button_frame, text="Mostrar compases recortados", command=self.mostrar_compases).pack(side="left", padx=5)
         tk.Button(button_frame, text="Volver a imagen completa", command=self.ver_imagen_completa).pack(side="left", padx=5)
         tk.Button(button_frame, text="Siguiente compás", command=self.siguiente_compas).pack(side="right", padx=5)
@@ -61,6 +53,33 @@ class PartituraApp:
         self.label_numero_compas.pack(side="bottom", pady=5)
 
         self.ventana.mainloop()
+
+    def mostrar_imagen(self):
+        width_ratio = self.max_width / self.imagen_original.width
+        height_ratio = self.max_height / self.imagen_original.height
+        self.factor_escala = min(width_ratio, height_ratio, self.factor_escala)
+        
+        img_resized = self.imagen_original.resize(
+            (int(self.imagen_original.width * self.factor_escala), int(self.imagen_original.height * self.factor_escala))
+        )
+        self.img_tk = ImageTk.PhotoImage(img_resized)
+
+        if hasattr(self, 'panel'):
+            self.panel.config(image=self.img_tk)
+        else:
+            self.panel = tk.Label(self.ventana, image=self.img_tk)
+            self.panel.pack(side="top", fill="both", expand="yes")
+
+        self.panel.bind("<ButtonPress-1>", self.iniciar_seleccion)
+        self.panel.bind("<B1-Motion>", self.arrastrar_seleccion)
+        self.panel.bind("<ButtonRelease-1>", self.finalizar_seleccion)
+
+    def ajustar_zoom(self, event):
+        if event.delta > 0:
+            self.factor_escala += self.zoom_step
+        elif event.delta < 0 and self.factor_escala > self.zoom_step:
+            self.factor_escala -= self.zoom_step
+        self.mostrar_imagen()
 
     def iniciar_seleccion(self, event):
         self.seleccionando = True
@@ -80,7 +99,6 @@ class PartituraApp:
             self.end_x = event.x
             self.end_y = event.y
             self.seleccionando = False
-            self.guardar_compas(self.start_x, self.start_y, self.end_x, self.end_y)
 
     def actualizar_seleccion(self):
         img_resized = self.imagen_original.resize(
@@ -91,16 +109,15 @@ class PartituraApp:
         self.img_tk = ImageTk.PhotoImage(img_resized)
         self.panel.config(image=self.img_tk)
 
-    def guardar_compas(self, x1, y1, x2, y2):
-        # Ajustar coordenadas según el factor de escala
-        x1 = int(x1 / self.factor_escala)
-        y1 = int(y1 / self.factor_escala)
-        x2 = int(x2 / self.factor_escala)
-        y2 = int(y2 / self.factor_escala)
-        
+    def confirmar_recorte(self):
+        x1 = int(self.start_x / self.factor_escala)
+        y1 = int(self.start_y / self.factor_escala)
+        x2 = int(self.end_x / self.factor_escala)
+        y2 = int(self.end_y / self.factor_escala)
+
         recorte = self.imagen_original.crop((x1, y1, x2, y2))
         self.recortes.append(recorte)
-        self.compas_actual = len(self.recortes) - 1  # Actualizar al último compás añadido
+        self.compas_actual = len(self.recortes) - 1
         self.label_numero_compas.config(text=f"Compás: {self.compas_actual + 1}")
         self.ver_imagen_completa()
 
@@ -133,11 +150,8 @@ class PartituraApp:
             messagebox.showinfo("Aviso", "Este es el primer compás.")
 
     def ver_imagen_completa(self):
-        img_resized = self.imagen_original.resize(
-            (int(self.imagen_original.width * self.factor_escala), int(self.imagen_original.height * self.factor_escala))
-        )
-        self.img_tk = ImageTk.PhotoImage(img_resized)
-        self.panel.config(image=self.img_tk)
+        self.factor_escala = min(self.max_width / self.imagen_original.width, self.max_height / self.imagen_original.height)
+        self.mostrar_imagen()
         self.label_numero_compas.config(text="Imagen completa")
 
 def executar_musescore(archivo_musicxml):
