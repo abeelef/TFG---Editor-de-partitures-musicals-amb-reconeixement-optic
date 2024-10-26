@@ -1,15 +1,14 @@
 import subprocess
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
 from PIL import ImageTk, Image, ImageDraw
 import pyautogui
 import pygetwindow as gw
 import time
 
 class PartituraApp:
-    def __init__(self, ruta_musicxml, ruta_imagen):
+    def __init__(self, ruta_musicxml):
         self.ruta_musicxml = ruta_musicxml
-        self.ruta_imagen = ruta_imagen
         self.recortes = []
         self.compas_actual = 0
         self.seleccionando = False
@@ -19,17 +18,22 @@ class PartituraApp:
         self.zoom_step = 0.1
         self.max_width = 800
         self.max_height = 600
+        self.imagen_original = None  # Inicializa la imagen original como None
         self.cargar_imagen()
         self.crear_interfaz()
 
     def cargar_imagen(self):
-        if hasattr(self, 'imagen_actual') and self.imagen_actual == self.ruta_imagen:
+        ruta_imagen = filedialog.askopenfilename(title="Seleccionar imagen", filetypes=[("Archivos de imagen", "*.jpg;*.jpeg;*.png")])
+        if not ruta_imagen:
+            messagebox.showwarning("Advertencia", "No se ha seleccionado ninguna imagen.")
+            return
+        if hasattr(self, 'imagen_actual') and self.imagen_actual == ruta_imagen:
             messagebox.showinfo("Aviso", "Ya estás analizando esta imagen.")
             return
-        self.imagen_actual = self.ruta_imagen
+        self.imagen_actual = ruta_imagen
         self.recortes = []
         self.compas_actual = 0
-        self.imagen_original = Image.open(self.ruta_imagen)
+        self.imagen_original = Image.open(self.imagen_actual)
 
     def crear_interfaz(self):
         self.ventana = tk.Tk()
@@ -43,6 +47,7 @@ class PartituraApp:
         button_frame = tk.Frame(self.ventana)
         button_frame.pack(side="bottom", fill="x", pady=10)
 
+        tk.Button(button_frame, text="Cargar Imagen", command=self.cargar_imagen).pack(side="left", padx=5)
         tk.Button(button_frame, text="Confirmar Recorte", command=self.confirmar_recorte).pack(side="left", padx=5)
         tk.Button(button_frame, text="Mostrar compases recortados", command=self.mostrar_compases).pack(side="left", padx=5)
         tk.Button(button_frame, text="Volver a imagen completa", command=self.ver_imagen_completa).pack(side="left", padx=5)
@@ -55,6 +60,9 @@ class PartituraApp:
         self.ventana.mainloop()
 
     def mostrar_imagen(self):
+        if self.imagen_original is None:
+            return  # Asegúrate de que la imagen original esté cargada
+
         width_ratio = self.max_width / self.imagen_original.width
         height_ratio = self.max_height / self.imagen_original.height
         self.factor_escala = min(width_ratio, height_ratio, self.factor_escala)
@@ -160,6 +168,4 @@ def executar_musescore(archivo_musicxml):
 
 if __name__ == "__main__":
     archivo_musicxml = "C:/Users/abel/Desktop/UNI/TFG/editor_partituras/prova.musicxml"
-    ruta_imagen = "C:/Users/abel/Desktop/UNI/TFG/exemplesMusicXML/exemplesMusicXML/CVCDOL.S01P01/CVCDOL.S01P01/XAC_ACAN_SMIAu04_005.jpg"
-    executar_musescore(archivo_musicxml)
-    app = PartituraApp(archivo_musicxml, ruta_imagen)
+    app = PartituraApp(archivo_musicxml)
