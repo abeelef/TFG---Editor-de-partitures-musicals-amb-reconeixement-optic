@@ -2,6 +2,8 @@ import subprocess
 import tkinter as tk
 from tkinter import messagebox, filedialog
 from PIL import ImageTk, Image, ImageDraw
+import pymongo
+from datetime import datetime
 import pyautogui
 import pygetwindow as gw
 import time
@@ -19,6 +21,13 @@ class PartituraApp:
         self.max_width = 800
         self.max_height = 600
         self.imagen_original = None  # Inicializa la imagen original como None
+
+    # Conectar a MongoDB
+        self.client = pymongo.MongoClient("mongodb://localhost:27017/")
+        self.db = self.client["partituras_tfg"]
+        self.partituras_collection = self.db["partituras"]
+
+
         self.cargar_imagen()
         self.crear_interfaz()
 
@@ -34,6 +43,22 @@ class PartituraApp:
         self.recortes = []
         self.compas_actual = 0
         self.imagen_original = Image.open(self.imagen_actual)
+
+        # Guardar la imagen y el archivo MusicXML en MongoDB
+        self.guardar_partitura_mongodb()
+
+
+    def guardar_partitura_mongodb(self):
+        # Crear documento para MongoDB
+        partitura_data = {
+            "titulo": "Sinfonía No. 5",  # Cambia este título según la partitura
+            "archivo_xml": self.ruta_musicxml,
+            "imagen_partitura": self.imagen_actual,
+            "fecha_creacion": datetime.now()
+        }
+        # Insertar en la base de datos
+        self.partituras_collection.insert_one(partitura_data)
+        print("Partitura guardada en MongoDB:", partitura_data)    
 
     def crear_interfaz(self):
         self.ventana = tk.Tk()
