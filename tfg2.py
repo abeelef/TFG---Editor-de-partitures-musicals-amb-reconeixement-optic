@@ -46,12 +46,14 @@ class PartituraApp:
 
         # Guardar la imagen y el archivo MusicXML en MongoDB
         self.guardar_partitura_mongodb()
+        print(self.ruta_musicxml)
+        executar_musescore(self.ruta_musicxml)
 
 
     def guardar_partitura_mongodb(self):
         # Crear documento para MongoDB
         partitura_data = {
-            "titulo": "Sinfonía No. 5",  # Cambia este título según la partitura
+            "titulo": "Sinfonía No. 9",  # Cambia este título según la partitura
             "archivo_xml": self.ruta_musicxml,
             "imagen_partitura": self.imagen_actual,
             "fecha_creacion": datetime.now()
@@ -192,5 +194,5 @@ def executar_musescore(archivo_musicxml):
     subprocess.Popen([musescore_path, archivo_musicxml])
 
 if __name__ == "__main__":
-    archivo_musicxml = "C:/Users/abel/Desktop/UNI/TFG/editor_partituras/prova.musicxml"
+    archivo_musicxml = "C:/Users/abel/Desktop/UNI/TFG/editor_partituras/TFG/prova.musicxml"
     app = PartituraApp(archivo_musicxml)
