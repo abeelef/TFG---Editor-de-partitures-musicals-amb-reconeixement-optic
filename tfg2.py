@@ -28,7 +28,7 @@ class PartituraApp:
         self.partituras_collection = self.db["partituras"]
 
 
-        self.cargar_imagen()
+        #self.cargar_imagen()
         self.crear_interfaz()
 
 
@@ -61,12 +61,14 @@ class PartituraApp:
         self.guardar_partitura_mongodb()
         print(self.ruta_musicxml)
         executar_musescore(self.ruta_musicxml)
+        self.mostrar_imagen()
+
 
 
     def guardar_partitura_mongodb(self):
         # Crear documento para MongoDB
         partitura_data = {
-            "titulo": "Sinfonía No. 9",  # Cambia este título según la partitura
+            "titulo": "Sinfonía No. 9",  # Canvia el títol segons la partitura, a falta de fer manual
             "archivo_xml": self.ruta_musicxml,
             "imagen_partitura": self.imagen_actual,
             "fecha_creacion": datetime.now()
