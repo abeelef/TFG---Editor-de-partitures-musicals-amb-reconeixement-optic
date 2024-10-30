@@ -82,6 +82,11 @@ class PartituraApp:
         self.ventana.title("Partitura manuscrita")
         self.ventana.attributes('-topmost', True)
 
+
+        # Crear un título visual en la parte superior
+        titulo = tk.Label(self.ventana, text="Partitures Musicals", font=("Helvetica", 18, "bold"), fg="blue")
+        titulo.pack(pady=10)  # Añade espacio alrededor del título para mejor presentación
+
         self.mostrar_imagen()
 
         self.ventana.bind("<MouseWheel>", self.ajustar_zoom)
