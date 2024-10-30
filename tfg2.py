@@ -31,6 +31,19 @@ class PartituraApp:
         self.cargar_imagen()
         self.crear_interfaz()
 
+
+    def guardar_musescore(self):
+        # Localizar la ventana de MuseScore
+        ventana_musescore = gw.getWindowsWithTitle("prova.musicxml")
+        
+        if ventana_musescore:
+            ventana_musescore[0].activate()  # Selecciona la primera ventana que coincida con el nombre
+            time.sleep(0.5)  # Da un tiempo para que la ventana se active
+            pyautogui.hotkey("ctrl", "s")  # Simula Ctrl+S para guardar
+            messagebox.showinfo("Guardar", "Partitura enviada al model d'entrenament")
+        else:
+            messagebox.showwarning("Advertencia", "No se encontró la ventana de MuseScore.")    
+
     def cargar_imagen(self):
         ruta_imagen = filedialog.askopenfilename(title="Seleccionar imagen", filetypes=[("Archivos de imagen", "*.jpg;*.jpeg;*.png")])
         if not ruta_imagen:
@@ -80,6 +93,8 @@ class PartituraApp:
         tk.Button(button_frame, text="Volver a imagen completa", command=self.ver_imagen_completa).pack(side="left", padx=5)
         tk.Button(button_frame, text="Siguiente compás", command=self.siguiente_compas).pack(side="right", padx=5)
         tk.Button(button_frame, text="Compás anterior", command=self.compas_anterior).pack(side="right", padx=5)
+        tk.Button(button_frame, text="Validar Partitura", command=self.guardar_musescore).pack(side="left", padx=5)
+
 
         self.label_numero_compas = tk.Label(self.ventana, text="Compás: 0")
         self.label_numero_compas.pack(side="bottom", pady=5)
