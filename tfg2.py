@@ -60,7 +60,16 @@ class PartituraApp:
         # Guardar la imagen y el archivo MusicXML en MongoDB
         self.guardar_partitura_mongodb()
         print(self.ruta_musicxml)
-        executar_musescore(self.ruta_musicxml)
+
+
+        partituras = [
+            "C:/Users/abel/Desktop/UNI/TFG/editor_partituras/TFG/Unir_xmls/XAC_ACAN_SMIAu04_005.01.musicxml",
+            "C:/Users/abel/Desktop/UNI/TFG/editor_partituras/TFG/Unir_xmls/XAC_ACAN_SMIAu04_005.02.musicxml",
+            "C:/Users/abel/Desktop/UNI/TFG/editor_partituras/TFG/Unir_xmls/XAC_ACAN_SMIAu04_005.03.musicxml"
+        ]
+
+        #executar_musescore(self.ruta_musicxml)
+        executar_musescore2(partituras)
         self.mostrar_imagen()
 
 
@@ -68,7 +77,7 @@ class PartituraApp:
     def guardar_partitura_mongodb(self):
         # Crear documento para MongoDB
         partitura_data = {
-            "titulo": "Sinfonía No. 9",  # Canvia el títol segons la partitura, a falta de fer manual
+            "titulo": "Sinfonía No. 11",  # Canvia el títol segons la partitura, a falta de fer manual
             "archivo_xml": self.ruta_musicxml,
             "imagen_partitura": self.imagen_actual,
             "fecha_creacion": datetime.now()
@@ -110,7 +119,7 @@ class PartituraApp:
 
     def mostrar_imagen(self):
         if self.imagen_original is None:
-            return  # Asegúrate de que la imagen original esté cargada
+            return  # Asegurarse de que la imagen original esté cargada
 
         width_ratio = self.max_width / self.imagen_original.width
         height_ratio = self.max_height / self.imagen_original.height
@@ -212,8 +221,15 @@ class PartituraApp:
         self.label_numero_compas.config(text="Imagen completa")
 
 def executar_musescore(archivo_musicxml):
-    musescore_path = "C:/Program Files/MuseScore 4/bin/MuseScore4.exe"
+    musescore_path = "C:/Program Files/MuseScore 3/bin/MuseScore3.exe"
     subprocess.Popen([musescore_path, archivo_musicxml])
+
+
+def executar_musescore2(lista_archivos):
+    # Ruta al ejecutable de MuseScore
+    musescore_path = "C:/Program Files/MuseScore 4/bin/MuseScore4.exe"
+    for archivo in lista_archivos:
+        subprocess.Popen([musescore_path, archivo]) 
 
 if __name__ == "__main__":
     archivo_musicxml = "C:/Users/abel/Desktop/UNI/TFG/editor_partituras/TFG/prova.musicxml"
