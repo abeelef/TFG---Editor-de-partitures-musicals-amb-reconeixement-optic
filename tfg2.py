@@ -7,6 +7,10 @@ from datetime import datetime
 import pyautogui
 import pygetwindow as gw
 import time
+from music21 import converter, stream
+import os
+
+
 
 class PartituraApp:
     def __init__(self, ruta_musicxml):
@@ -107,9 +111,11 @@ class PartituraApp:
         tk.Button(button_frame, text="Confirmar Recorte", command=self.confirmar_recorte).pack(side="left", padx=5)
         tk.Button(button_frame, text="Mostrar compases recortados", command=self.mostrar_compases).pack(side="left", padx=5)
         tk.Button(button_frame, text="Volver a imagen completa", command=self.ver_imagen_completa).pack(side="left", padx=5)
-        tk.Button(button_frame, text="Siguiente compás", command=self.siguiente_compas).pack(side="right", padx=5)
-        tk.Button(button_frame, text="Compás anterior", command=self.compas_anterior).pack(side="right", padx=5)
+        tk.Button(button_frame, text=" --> ", command=self.siguiente_compas).pack(side="right", padx=5)
+        tk.Button(button_frame, text=" <-- ", command=self.compas_anterior).pack(side="right", padx=5)
         tk.Button(button_frame, text="Validar Partitura", command=self.guardar_musescore).pack(side="left", padx=5)
+        tk.Button(button_frame, text="Unificar MusicXML", command=self.unificar_musicxml).pack(side="left", padx=5)
+
 
 
         self.label_numero_compas = tk.Label(self.ventana, text="Compás: 0")
@@ -219,6 +225,36 @@ class PartituraApp:
         self.factor_escala = min(self.max_width / self.imagen_original.width, self.max_height / self.imagen_original.height)
         self.mostrar_imagen()
         self.label_numero_compas.config(text="Imagen completa")
+
+    def unificar_musicxml(self):
+           # Lista de los archivos MusicXML que quieres combinar
+        archivos_xml = [
+            'XAC_ACAN_SMIAu04_005.01.musicxml',
+            'XAC_ACAN_SMIAu04_005.02.musicxml',
+            'XAC_ACAN_SMIAu04_005.03.musicxml',
+            'XAC_ACAN_SMIAu04_005.04.musicxml',
+            'XAC_ACAN_SMIAu04_005.05.musicxml',
+            'XAC_ACAN_SMIAu04_005.06.musicxml',
+            'XAC_ACAN_SMIAu04_005.07.musicxml',
+            'XAC_ACAN_SMIAu04_005.08.musicxml',
+            'XAC_ACAN_SMIAu04_005.09.musicxml'
+        ]
+
+        # Crear un flujo vacío donde se añadirán las partituras
+        partitura_unida = stream.Score()
+
+        # Iterar sobre cada archivo y agregar su contenido al flujo
+        for archivo in archivos_xml:
+            # Cargar el archivo MusicXML
+            partitura = converter.parse(archivo)
+            
+            # Añadir la partitura cargada al flujo de la partitura unida
+            partitura_unida.append(partitura)
+
+        # Guardar el archivo combinado
+        partitura_unida.write('musicxml', fp='partitura_unida.musicxml')
+        print("Los archivos han sido unidos y guardados como 'partitura_unida.musicxml'")
+        
 
 def executar_musescore(archivo_musicxml):
     musescore_path = "C:/Program Files/MuseScore 3/bin/MuseScore3.exe"
