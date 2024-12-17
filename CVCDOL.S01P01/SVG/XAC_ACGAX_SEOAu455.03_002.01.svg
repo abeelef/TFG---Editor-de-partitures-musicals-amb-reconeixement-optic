@@ -1,0 +1,912 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mei="http://www.music-encoding.org/ns/mei" width="3682px" height="469px" version="1.1" overflow="visible">
+    <desc>Engraved by Verovio 4.3.0-dev-ba68db3-dirty</desc>
+    <defs>
+        <symbol id="E0A3-1l5auym" viewBox="0 0 1000 1000" overflow="inherit">
+            <path transform="scale(1,-1)" d="M278 64c0 22 -17 39 -43 39c-12 0 -26 -3 -41 -10c-85 -43 -165 -94 -165 -156c5 -25 15 -32 49 -32c67 11 200 95 200 159zM0 -36c0 68 73 174 200 174c66 0 114 -39 114 -97c0 -84 -106 -173 -218 -173c-64 0 -96 32 -96 96z"/>
+        </symbol>
+        <symbol id="E0A4-1l5auym" viewBox="0 0 1000 1000" overflow="inherit">
+            <path transform="scale(1,-1)" d="M0 -39c0 68 73 172 200 172c66 0 114 -37 114 -95c0 -84 -106 -171 -218 -171c-64 0 -96 30 -96 94z"/>
+        </symbol>
+        <symbol id="E050-1l5auym" viewBox="0 0 1000 1000" overflow="inherit">
+            <path transform="scale(1,-1)" d="M441 -245c-23 -4 -48 -6 -76 -6c-59 0 -102 7 -130 20c-88 42 -150 93 -187 154c-26 44 -43 103 -48 176c0 6 -1 13 -1 19c0 54 15 111 45 170c29 57 65 106 110 148s96 85 153 127c-3 16 -8 46 -13 92c-4 43 -5 73 -5 89c0 117 16 172 69 257c34 54 64 82 89 82 c21 0 43 -30 69 -92s39 -115 41 -159v-15c0 -109 -21 -162 -67 -241c-13 -20 -63 -90 -98 -118c-13 -9 -25 -19 -37 -29l31 -181c8 1 18 2 28 2c58 0 102 -12 133 -35c59 -43 92 -104 98 -184c1 -7 1 -15 1 -22c0 -123 -87 -209 -181 -248c8 -57 17 -110 25 -162 c5 -31 6 -58 6 -80c0 -30 -5 -53 -14 -70c-35 -64 -88 -99 -158 -103c-5 0 -11 -1 -16 -1c-37 0 -72 10 -108 27c-50 24 -77 59 -80 105v11c0 29 7 55 20 76c18 28 45 42 79 44h6c49 0 93 -42 97 -87v-9c0 -51 -34 -86 -105 -106c17 -24 51 -36 102 -36c62 0 116 43 140 85 c9 16 13 41 13 74c0 20 -1 42 -5 67c-8 53 -18 106 -26 159zM461 939c-95 0 -135 -175 -135 -286c0 -24 2 -48 5 -71c50 39 92 82 127 128c40 53 60 100 60 140v8c-4 53 -22 81 -55 81h-2zM406 119l54 -326c73 25 110 78 110 161c0 7 0 15 -1 23c-7 95 -57 142 -151 142h-12 zM382 117c-72 -2 -128 -47 -128 -120v-7c2 -46 43 -99 75 -115c-3 -2 -7 -5 -10 -10c-70 33 -116 88 -123 172v11c0 68 44 126 88 159c23 17 49 29 78 36l-29 170c-21 -13 -52 -37 -92 -73c-50 -44 -86 -84 -109 -119c-45 -69 -67 -130 -67 -182v-13c5 -68 35 -127 93 -176 s125 -73 203 -73c25 0 50 3 75 9c-19 111 -36 221 -54 331z"/>
+        </symbol>
+        <symbol id="E062-1l5auym" viewBox="0 0 1000 1000" overflow="inherit">
+            <path transform="scale(1,-1)" d="M582 -120c0 32 26 58 58 58s58 -26 58 -58s-26 -58 -58 -58s-58 26 -58 58zM582 120c0 32 26 58 58 58s58 -26 58 -58s-26 -58 -58 -58s-58 26 -58 58zM158 96c51 0 73 -14 88 -49l16 -39c0 -17 -2 -30 -7 -40c-3 -11 -10 -21 -19 -31c-17 -18 -49 -43 -84 -43 c-55 0 -77 13 -112 44c-24 21 -35 55 -35 100c0 46 14 81 32 112c30 52 71 79 137 93l36 6l26 2c154 0 235 -68 274 -182c11 -32 18 -68 18 -107c0 -103 -26 -182 -68 -250c-89 -145 -234 -230 -412 -288l-30 -5c-9 0 -14 3 -14 8c3 10 5 11 10 16c35 15 70 30 96 44l78 43 c96 57 162 136 197 258c9 33 17 60 22 100c3 22 5 35 6 39c-7 69 -16 115 -23 140s-4 22 -16 40c-8 12 -19 23 -31 34c-24 21 -62 44 -118 44c-48 0 -84 -8 -113 -28c-28 -19 -42 -44 -42 -73v-16c2 -5 3 -9 4 -11c24 22 52 39 84 39z"/>
+        </symbol>
+        <symbol id="E262-1l5auym" viewBox="0 0 1000 1000" overflow="inherit">
+            <path transform="scale(1,-1)" d="M136 186v169h17v-164l44 14v-91l-44 -14v-165l44 12v-91l-44 -13v-155h-17v150l-76 -22v-155h-17v149l-43 -13v90l43 14v167l-43 -14v92l43 13v169h17v-163zM60 73v-167l76 22v168z"/>
+        </symbol>
+        <symbol id="E241-1l5auym" viewBox="0 0 1000 1000" overflow="inherit">
+            <path transform="scale(1,-1)" d="M179 646c-4 8 -17 30 -18 33l-4 10c0 3 2 5 5 5s7 -2 13 -7c23 -33 46 -81 66 -132c22 -57 35 -125 35 -163c0 -104 -60 -183 -122 -241c-63 -59 -57 -53 -61 -56c-38 -34 -63 -95 -71 -95h-22v190c40 7 69 11 87 16c88 27 168 95 168 200c0 30 -12 89 -30 138 c-17 47 -31 73 -46 102z"/>
+        </symbol>
+        <symbol id="E08A-1l5auym" viewBox="0 0 1000 1000" overflow="inherit">
+            <path transform="scale(1,-1)" d="M340 179c-9 24 -56 41 -89 41c-46 0 -81 -28 -100 -58c-17 -28 -25 -78 -25 -150c0 -65 2 -111 8 -135c8 -31 18 -49 40 -67c20 -17 43 -25 70 -25c54 0 92 36 115 75c14 25 23 54 28 88h27c0 -63 -24 -105 -58 -141c-35 -38 -82 -56 -140 -56c-45 0 -83 13 -115 39 c-57 45 -101 130 -101 226c0 59 33 127 68 163c36 37 97 72 160 72c36 0 93 -21 121 -40c11 -8 23 -17 33 -30c19 -23 27 -48 27 -76c0 -51 -35 -88 -86 -88c-43 0 -76 27 -76 68c0 26 7 35 21 51c15 17 32 27 58 32c7 2 14 7 14 11z"/>
+        </symbol>
+        <symbol id="E4E6-1l5auym" viewBox="0 0 1000 1000" overflow="inherit">
+            <path transform="scale(1,-1)" d="M0 123c7 34 33 56 69 60c29 -3 43 -9 53 -29c4 -8 7 -15 10 -22c0 -21 -1 -25 -11 -35c-5 -8 -18 -14 -40 -20l12 -3l15 -1c44 0 97 26 122 56c10 11 18 26 24 42c7 1 15 2 22 3l-140 -424h-36l111 330c-10 -6 -27 -12 -53 -16l-52 -8h-10l-20 1c-1 0 -8 3 -21 6 c-37 9 -55 28 -55 60z"/>
+        </symbol>
+        <symbol id="E882-1l5auym" viewBox="0 0 1000 1000" overflow="inherit">
+            <path transform="scale(1,-1)" d="M166 311c60 0 94 -21 94 -80c0 -27 -12 -51 -40 -64l-70 -32c-37 -10 -69 -30 -96 -60h21l26 -2l12 -6c14 -6 28 -11 42 -17c6 -3 13 -4 21 -4l15 4l11 8c5 5 11 13 19 26l17 -9l-16 -28c-2 -4 -16 -28 -20 -31c-19 -21 -38 -31 -57 -31h-10c-13 6 -25 12 -36 20l-15 11 c-12 7 -23 10 -32 10c-10 -3 -19 -8 -24 -17l-5 -9h-23c0 27 6 51 20 72c7 10 14 16 19 21l28 25c20 11 40 22 59 33l19 9c16 7 29 18 39 30c12 15 19 30 19 45l1 12c0 13 -4 24 -12 31c-6 9 -15 14 -28 14c-29 0 -46 -15 -52 -44l3 -12l2 -16c0 -20 -8 -29 -25 -29 c-14 0 -26 13 -26 28c0 48 52 92 100 92z"/>
+        </symbol>
+        <symbol id="E883-1l5auym" viewBox="0 0 1000 1000" overflow="inherit">
+            <path transform="scale(1,-1)" d="M161 326c52 0 94 -17 94 -68c0 -50 -40 -76 -82 -94c26 -21 39 -42 39 -64c0 -52 -56 -100 -118 -100h-12c-40 0 -82 23 -82 56c0 30 12 49 37 49c17 0 31 -16 34 -31c0 -5 -4 -12 -11 -21c-7 -5 -13 -10 -13 -21l11 -9l17 -4c21 0 40 12 56 37c13 21 19 45 19 70 c-9 30 -28 35 -66 35l6 23c34 0 60 4 77 13c20 11 30 35 30 70c0 28 -12 38 -39 40l-20 -3c-8 -3 -12 -9 -12 -16c2 -7 4 -11 5 -14l4 -11l3 -10l-3 -12c-5 -6 -11 -11 -20 -13c-2 0 -4 -1 -6 -1c-16 0 -30 13 -30 28c0 39 43 71 82 71z"/>
+        </symbol>
+        <symbol id="E884-1l5auym" viewBox="0 0 1000 1000" overflow="inherit">
+            <path transform="scale(1,-1)" d="M259 110l-6 -21h-59l-16 -52c-3 -6 0 -11 9 -14l34 -2l-6 -21h-155l6 21l18 1l15 4c9 3 16 11 20 23l13 40h-132l5 21c12 10 26 22 39 39l33 43c13 18 27 41 40 68l21 51h97l-36 -49c-13 -16 -33 -34 -49 -49c-36 -35 -76 -67 -115 -100l108 -3l20 72l80 77h5l-44 -149 h55z"/>
+        </symbol>
+        <symbol id="E500-1l5auym" viewBox="0 0 1000 1000" overflow="inherit">
+            <path transform="scale(1,-1)" d="M508 242l-362 -484h-146l362 484h146zM52 118c0 13 4 25 13 34s19 14 32 15c14 0 26 -4 35 -12s14 -19 15 -33c0 -13 -4 -25 -13 -34s-19 -14 -32 -15c-14 0 -26 4 -35 12s-14 19 -15 33zM361 -121c0 13 4 25 13 34s19 14 32 15c14 0 26 -4 35 -12s14 -19 15 -33 c0 -13 -4 -25 -13 -34s-19 -14 -32 -15c-14 0 -26 4 -35 12s-14 19 -15 33z"/>
+        </symbol>
+        <symbol id="E220-1l5auym" viewBox="0 0 1000 1000" overflow="inherit">
+            <path transform="scale(1,-1)" d="M-163 -25l326 150v-100l-326 -150v100z"/>
+        </symbol>
+        <symbol id="E101-1l5auym" viewBox="0 0 1000 1000" overflow="inherit">
+            <path transform="scale(1,-1)" d="M460 250l-350 -500h-110l350 500h110z"/>
+        </symbol>
+        <symbol id="E243-1l5auym" viewBox="0 0 1000 1000" overflow="inherit">
+            <path transform="scale(1,-1)" d="M216 730c-5 8 -10 13 -11 16l-4 10c0 3 2 5 5 5s7 -2 13 -7c35 -42 57 -101 57 -172c0 -34 -6 -65 -17 -94c10 -31 17 -64 17 -96c0 -104 -60 -183 -122 -241c-63 -59 -57 -53 -61 -56c-38 -34 -63 -95 -71 -95h-22v190v190c40 7 69 11 87 16c116 36 175 111 175 197 c0 44 -15 91 -46 137zM248 463c-23 -48 -58 -89 -94 -122c-63 -59 -57 -53 -61 -56c-30 -27 -44 -71 -53 -88c20 3 36 6 47 9c88 27 168 95 168 200c0 19 -3 39 -7 57z"/>
+        </symbol>
+        <symbol id="E4E3-1l5auym" viewBox="0 0 1000 1000" overflow="inherit">
+            <path transform="scale(1,-1)" d="M0 -115v105c0 9 1 10 10 10h280c9 0 10 -1 10 -10v-105c0 -9 -1 -10 -10 -10h-280c-9 0 -10 1 -10 10z"/>
+        </symbol>
+    </defs>
+    <style type="text/css">g.page-margin{font-family:Times,serif;} g.ending, g.fing, g.reh, g.tempo{font-weight:bold;} g.dir, g.dynam, g.mNum{font-style:italic;} g.label{font-weight:normal;}</style>
+    <svg class="definition-scale" color="black" viewBox="0 0 36820 4690">
+        <g class="page-margin" transform="translate(500, 500)">
+            <g id="m19q97q6" class="mdiv pageMilestone"/>
+            <g id="s5qomdj" class="score pageMilestone"/>
+            <g id="svwasz" class="system">
+                <path d="M1523 630 L1523 3150" stroke="currentColor" stroke-width="27"/>
+                <g id="gxatmr7" class="grpSym">
+                    <path d="M1438,3132 C1078,2592 1528,2070 1258,1890 C1591,2070 1141,2592 1438,3132" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"/>
+                    <path d="M1438,648 C1141,1188 1591,1710 1258,1890 C1528,1710 1078,1188 1438,648" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"/>
+                </g>
+                <g id="l1gblq1a" class="label">
+                    <text x="1105" y="1980" text-anchor="end" font-size="0px">
+                        <tspan id="tl2t46s" class="text">
+                            <tspan font-size="405px">Piano</tspan>
+                        </tspan>
+                    </text>
+                </g>
+                <g id="s1nv62j3" class="section systemMilestone"/>
+                <g id="pP1_m1" class="measure">
+                    <g id="s69wubx" class="staff">
+                        <path d="M1510 630 L5578 630" stroke="currentColor" stroke-width="13"/>
+                        <path d="M1510 810 L5578 810" stroke="currentColor" stroke-width="13"/>
+                        <path d="M1510 990 L5578 990" stroke="currentColor" stroke-width="13"/>
+                        <path d="M1510 1170 L5578 1170" stroke="currentColor" stroke-width="13"/>
+                        <path d="M1510 1350 L5578 1350" stroke="currentColor" stroke-width="13"/>
+                        <g id="clef1_1" class="clef">
+                            <use xlink:href="#E050-1l5auym" x="1627" y="1170" height="720px" width="720px"/>
+                        </g>
+                        <g id="key1_1" class="keySig">
+                            <g id="key1_1.accidental1" class="keyAccid">
+                                <use xlink:href="#E262-1l5auym" x="2308" y="630" height="720px" width="720px"/>
+                            </g>
+                            <g id="key1_1.accidental2" class="keyAccid">
+                                <use xlink:href="#E262-1l5auym" x="2486" y="900" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                        <g id="time1_1" class="meterSig">
+                            <use xlink:href="#E08A-1l5auym" x="2807" y="990" height="720px" width="720px"/>
+                        </g>
+                        <g id="l1m3mpjd" class="layer">
+                            <g id="note1.tremolo_single" class="bTrem">
+                                <use xlink:href="#E220-1l5auym" x="3592" y="1170" height="720px" width="720px" id="note1.tremolo_single.line1" class="bTrem_line"/>
+                                <g id="note1" class="note">
+                                    <g class="notehead" id="note1.notehead">
+                                        <use xlink:href="#E0A3-1l5auym" x="3375" y="1440" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note1.stem" class="stem">
+                                        <path d="M3592 1412 L3592 810" stroke="currentColor" stroke-width="18"/>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="note2.tremolo_single" class="bTrem">
+                                <use xlink:href="#E220-1l5auym" x="4642" y="1170" height="720px" width="720px" id="note2.tremolo_single.line1" class="bTrem_line"/>
+                                <g id="note2" class="note">
+                                    <g class="notehead" id="note2.notehead">
+                                        <use xlink:href="#E0A3-1l5auym" x="4425" y="1440" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note2.stem" class="stem">
+                                        <path d="M4642 1412 L4642 810" stroke="currentColor" stroke-width="18"/>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="sy22qza" class="staff">
+                        <path d="M1510 2430 L5578 2430" stroke="currentColor" stroke-width="13"/>
+                        <path d="M1510 2610 L5578 2610" stroke="currentColor" stroke-width="13"/>
+                        <path d="M1510 2790 L5578 2790" stroke="currentColor" stroke-width="13"/>
+                        <path d="M1510 2970 L5578 2970" stroke="currentColor" stroke-width="13"/>
+                        <path d="M1510 3150 L5578 3150" stroke="currentColor" stroke-width="13"/>
+                        <g id="clef2_2" class="clef">
+                            <use xlink:href="#E062-1l5auym" x="1627" y="2610" height="720px" width="720px"/>
+                        </g>
+                        <g id="key1_2" class="keySig">
+                            <g id="key1_2.accidental1" class="keyAccid">
+                                <use xlink:href="#E262-1l5auym" x="2308" y="2610" height="720px" width="720px"/>
+                            </g>
+                            <g id="key1_2.accidental2" class="keyAccid">
+                                <use xlink:href="#E262-1l5auym" x="2486" y="2880" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                        <g id="time1_2" class="meterSig">
+                            <use xlink:href="#E08A-1l5auym" x="2807" y="2790" height="720px" width="720px"/>
+                        </g>
+                        <g id="ljdpq3n" class="layer">
+                            <g id="rest1" class="mRest">
+                                <use xlink:href="#E4E3-1l5auym" x="4265" y="2610" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="pP1_m1.right_barline" class="barLine">
+                        <path id="pP1_m1.right_barline.barline_tok1" d="M5565 630 L5565 3150" stroke="currentColor" stroke-width="27" class="barline_tok"/>
+                    </g>
+                </g>
+                <g id="pP1_m2" class="measure">
+                    <g id="srw00dn" class="staff">
+                        <path d="M5578 630 L9105 630" stroke="currentColor" stroke-width="13"/>
+                        <path d="M5578 810 L9105 810" stroke="currentColor" stroke-width="13"/>
+                        <path d="M5578 990 L9105 990" stroke="currentColor" stroke-width="13"/>
+                        <path d="M5578 1170 L9105 1170" stroke="currentColor" stroke-width="13"/>
+                        <path d="M5578 1350 L9105 1350" stroke="currentColor" stroke-width="13"/>
+                        <g class="ledgerLines below">
+                            <path d="M6026 1530 L6348 1530" stroke="currentColor" stroke-width="22"/>
+                            <path d="M6658 1530 L6980 1530" stroke="currentColor" stroke-width="22"/>
+                        </g>
+                        <g id="lwe9219" class="layer">
+                            <g id="beam1_parent" class="beam_parent">
+                                <polygon points="5966,810 6932,810 6932,900 5966,900" id="beam1" class="beam"/>
+                                <polygon points="5966,945 6932,945 6932,1035 5966,1035" id="beam2" class="beam"/>
+                                <g id="note3" class="note">
+                                    <g class="notehead" id="note3.notehead">
+                                        <use xlink:href="#E0A4-1l5auym" x="5758" y="1440" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note3.stem" class="stem">
+                                        <path d="M5975 1412 L5975 828" stroke="currentColor" stroke-width="18"/>
+                                    </g>
+                                </g>
+                                <g id="note4" class="note">
+                                    <g class="notehead" id="note4.notehead">
+                                        <use xlink:href="#E0A4-1l5auym" x="6074" y="1530" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note4.stem" class="stem">
+                                        <path d="M6291 1502 L6291 828" stroke="currentColor" stroke-width="18"/>
+                                    </g>
+                                    <g id="note4.accidental" class="accid"/>
+                                </g>
+                                <g id="note5" class="note">
+                                    <g class="notehead" id="note5.notehead">
+                                        <use xlink:href="#E0A4-1l5auym" x="6390" y="1440" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note5.stem" class="stem">
+                                        <path d="M6607 1412 L6607 828" stroke="currentColor" stroke-width="18"/>
+                                    </g>
+                                </g>
+                                <g id="note6" class="note">
+                                    <g class="notehead" id="note6.notehead">
+                                        <use xlink:href="#E0A4-1l5auym" x="6706" y="1530" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note6.stem" class="stem">
+                                        <path d="M6923 1502 L6923 828" stroke="currentColor" stroke-width="18"/>
+                                    </g>
+                                    <g id="note6.accidental" class="accid"/>
+                                </g>
+                            </g>
+                            <g id="rest2" class="space"/>
+                            <g id="rest3" class="space"/>
+                        </g>
+                        <g id="l1bzpnn7" class="layer">
+                            <g id="s7mvp0w" class="space"/>
+                            <g id="note7" class="note">
+                                <g class="notehead" id="note7.notehead">
+                                    <use xlink:href="#E101-1l5auym" x="7022" y="990" height="720px" width="720px"/>
+                                </g>
+                            </g>
+                            <g id="note8" class="note">
+                                <g class="notehead" id="note8.notehead">
+                                    <use xlink:href="#E101-1l5auym" x="7712" y="990" height="720px" width="720px"/>
+                                </g>
+                            </g>
+                            <g id="note9" class="note">
+                                <g class="notehead" id="note9.notehead">
+                                    <use xlink:href="#E101-1l5auym" x="8402" y="990" height="720px" width="720px"/>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="s1jhqls9" class="staff">
+                        <path d="M5578 2430 L9105 2430" stroke="currentColor" stroke-width="13"/>
+                        <path d="M5578 2610 L9105 2610" stroke="currentColor" stroke-width="13"/>
+                        <path d="M5578 2790 L9105 2790" stroke="currentColor" stroke-width="13"/>
+                        <path d="M5578 2970 L9105 2970" stroke="currentColor" stroke-width="13"/>
+                        <path d="M5578 3150 L9105 3150" stroke="currentColor" stroke-width="13"/>
+                        <g id="lndg3i0" class="layer">
+                            <g id="rest4" class="mRest">
+                                <use xlink:href="#E4E3-1l5auym" x="7220" y="2610" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="pP1_m2.right_barline" class="barLine">
+                        <path id="pP1_m2.right_barline.barline_tok1" d="M9092 630 L9092 3150" stroke="currentColor" stroke-width="27" class="barline_tok"/>
+                    </g>
+                </g>
+                <g id="pP1_m3" class="measure">
+                    <g id="s1h8c4zj" class="staff">
+                        <path d="M9105 630 L10798 630" stroke="currentColor" stroke-width="13"/>
+                        <path d="M9105 810 L10798 810" stroke="currentColor" stroke-width="13"/>
+                        <path d="M9105 990 L10798 990" stroke="currentColor" stroke-width="13"/>
+                        <path d="M9105 1170 L10798 1170" stroke="currentColor" stroke-width="13"/>
+                        <path d="M9105 1350 L10798 1350" stroke="currentColor" stroke-width="13"/>
+                        <g id="lkadn1" class="layer">
+                            <g id="pP1_m3.measure_repeat" class="mRpt">
+                                <use xlink:href="#E500-1l5auym" x="9756" y="990" height="720px" width="720px"/>
+                                <use xlink:href="#E882-1l5auym" x="9844" y="540" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                        <g id="l1x5sfuu" class="layer">
+                            <g id="m1u3ugc2" class="mRpt">
+                                <use xlink:href="#E500-1l5auym" x="9756" y="990" height="720px" width="720px"/>
+                                <use xlink:href="#E882-1l5auym" x="9844" y="540" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="s15cv643" class="staff">
+                        <path d="M9105 2430 L10798 2430" stroke="currentColor" stroke-width="13"/>
+                        <path d="M9105 2610 L10798 2610" stroke="currentColor" stroke-width="13"/>
+                        <path d="M9105 2790 L10798 2790" stroke="currentColor" stroke-width="13"/>
+                        <path d="M9105 2970 L10798 2970" stroke="currentColor" stroke-width="13"/>
+                        <path d="M9105 3150 L10798 3150" stroke="currentColor" stroke-width="13"/>
+                        <g id="l1af0441" class="layer">
+                            <g id="m13ibues" class="mRpt">
+                                <use xlink:href="#E500-1l5auym" x="9756" y="2790" height="720px" width="720px"/>
+                                <use xlink:href="#E882-1l5auym" x="9844" y="2340" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="pP1_m3.right_barline" class="barLine">
+                        <path id="pP1_m3.right_barline.barline_tok1" d="M10785 630 L10785 3150" stroke="currentColor" stroke-width="27" class="barline_tok"/>
+                    </g>
+                </g>
+                <g id="pP1_m4" class="measure">
+                    <g id="sxotkec" class="staff">
+                        <path d="M10798 630 L12491 630" stroke="currentColor" stroke-width="13"/>
+                        <path d="M10798 810 L12491 810" stroke="currentColor" stroke-width="13"/>
+                        <path d="M10798 990 L12491 990" stroke="currentColor" stroke-width="13"/>
+                        <path d="M10798 1170 L12491 1170" stroke="currentColor" stroke-width="13"/>
+                        <path d="M10798 1350 L12491 1350" stroke="currentColor" stroke-width="13"/>
+                        <g id="l1uf8sic" class="layer">
+                            <g id="pP1_m4.measure_repeat" class="mRpt">
+                                <use xlink:href="#E500-1l5auym" x="11449" y="990" height="720px" width="720px"/>
+                                <use xlink:href="#E883-1l5auym" x="11539" y="540" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                        <g id="lgmr3wv" class="layer">
+                            <g id="m2qyt" class="mRpt">
+                                <use xlink:href="#E500-1l5auym" x="11449" y="990" height="720px" width="720px"/>
+                                <use xlink:href="#E883-1l5auym" x="11539" y="540" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="shrdn96" class="staff">
+                        <path d="M10798 2430 L12491 2430" stroke="currentColor" stroke-width="13"/>
+                        <path d="M10798 2610 L12491 2610" stroke="currentColor" stroke-width="13"/>
+                        <path d="M10798 2790 L12491 2790" stroke="currentColor" stroke-width="13"/>
+                        <path d="M10798 2970 L12491 2970" stroke="currentColor" stroke-width="13"/>
+                        <path d="M10798 3150 L12491 3150" stroke="currentColor" stroke-width="13"/>
+                        <g id="l17ze7a0" class="layer">
+                            <g id="mo6s2ha" class="mRpt">
+                                <use xlink:href="#E500-1l5auym" x="11449" y="2790" height="720px" width="720px"/>
+                                <use xlink:href="#E883-1l5auym" x="11539" y="2340" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="pP1_m4.right_barline" class="barLine">
+                        <path id="pP1_m4.right_barline.barline_tok1" d="M12478 630 L12478 3150" stroke="currentColor" stroke-width="27" class="barline_tok"/>
+                    </g>
+                </g>
+                <g id="pP1_m5" class="measure">
+                    <g id="s1om7myj" class="staff">
+                        <path d="M12491 630 L17134 630" stroke="currentColor" stroke-width="13"/>
+                        <path d="M12491 810 L17134 810" stroke="currentColor" stroke-width="13"/>
+                        <path d="M12491 990 L17134 990" stroke="currentColor" stroke-width="13"/>
+                        <path d="M12491 1170 L17134 1170" stroke="currentColor" stroke-width="13"/>
+                        <path d="M12491 1350 L17134 1350" stroke="currentColor" stroke-width="13"/>
+                        <g id="key2" class="keySig" visibility="hidden"/>
+                        <g class="ledgerLines above">
+                            <path d="M13911 450 L14197 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M14227 450 L14513 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M14543 450 L14829 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M14859 450 L15145 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M16129 450 L16415 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M16445 450 L16731 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M16761 450 L17047 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M14543 270 L14829 270" stroke="currentColor" stroke-width="22"/>
+                            <path d="M14859 270 L15145 270" stroke="currentColor" stroke-width="22"/>
+                            <path d="M16761 270 L17047 270" stroke="currentColor" stroke-width="22"/>
+                        </g>
+                        <g id="l9mnns6" class="layer">
+                            <g id="note24" class="note">
+                                <g class="notehead" id="note24.notehead">
+                                    <use xlink:href="#E0A4-1l5auym" x="12671" y="1440" height="720px" width="720px"/>
+                                </g>
+                                <g id="note24.stem" class="stem">
+                                    <path d="M12888 1412 L12888 810" stroke="currentColor" stroke-width="18"/>
+                                </g>
+                            </g>
+                            <g id="rest11" class="rest">
+                                <use xlink:href="#E4E6-1l5auym" x="13361" y="990" height="720px" width="720px"/>
+                                <g id="rest11.dots_parent" class="dots">
+                                    <ellipse cx="13649" cy="900" rx="36" ry="36" id="rest11.dot1" class="single_dot"/>
+                                </g>
+                            </g>
+                            <g id="beam7_parent" class="beam_parent">
+                                <polygon points="13941,1260 14591,1080 14591,990 13941,1170" id="beam7" class="beam"/>
+                                <polygon points="13941,1125 14591,945 14591,855 13941,1035" id="beam8" class="beam"/>
+                                <polygon points="13941,990 14591,810 14591,720 13941,900" id="beam9" class="beam"/>
+                                <g id="tuplet1" class="tuplet">
+                                    <g id="tuplet1.number" class="tupletNum">
+                                        <use xlink:href="#E883-1l5auym" x="14221" y="1467" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note25" class="note">
+                                        <g class="notehead" id="note25.notehead">
+                                            <use xlink:href="#E0A4-1l5auym" x="13941" y="450" height="720px" width="720px"/>
+                                        </g>
+                                        <g id="note25.stem" class="stem">
+                                            <path d="M13950 478 L13950 1242" stroke="currentColor" stroke-width="18"/>
+                                        </g>
+                                    </g>
+                                    <g id="note26" class="note">
+                                        <g class="notehead" id="note26.notehead">
+                                            <use xlink:href="#E0A4-1l5auym" x="14257" y="360" height="720px" width="720px"/>
+                                        </g>
+                                        <g id="note26.stem" class="stem">
+                                            <path d="M14266 388 L14266 1152" stroke="currentColor" stroke-width="18"/>
+                                        </g>
+                                    </g>
+                                    <g id="note27" class="note">
+                                        <g class="notehead" id="note27.notehead">
+                                            <use xlink:href="#E0A4-1l5auym" x="14573" y="270" height="720px" width="720px"/>
+                                        </g>
+                                        <g id="note27.stem" class="stem">
+                                            <path d="M14582 298 L14582 1062" stroke="currentColor" stroke-width="18"/>
+                                        </g>
+                                        <g id="note27.accidental" class="accid"/>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="note28" class="note">
+                                <g class="notehead" id="note28.notehead">
+                                    <use xlink:href="#E0A4-1l5auym" x="14889" y="180" height="720px" width="720px"/>
+                                </g>
+                                <g id="note28.stem" class="stem">
+                                    <path d="M14898 208 L14898 990" stroke="currentColor" stroke-width="18"/>
+                                </g>
+                            </g>
+                            <g id="rest12" class="rest">
+                                <use xlink:href="#E4E6-1l5auym" x="15579" y="990" height="720px" width="720px"/>
+                                <g id="rest12.dots_parent" class="dots">
+                                    <ellipse cx="15867" cy="900" rx="36" ry="36" id="rest12.dot1" class="single_dot"/>
+                                </g>
+                            </g>
+                            <g id="beam10_parent" class="beam_parent">
+                                <polygon points="16159,1260 16809,1080 16809,990 16159,1170" id="beam10" class="beam"/>
+                                <polygon points="16159,1125 16809,945 16809,855 16159,1035" id="beam11" class="beam"/>
+                                <polygon points="16159,990 16809,810 16809,720 16159,900" id="beam12" class="beam"/>
+                                <g id="tuplet2" class="tuplet">
+                                    <g id="tuplet2.number" class="tupletNum">
+                                        <use xlink:href="#E883-1l5auym" x="16439" y="1467" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note29" class="note">
+                                        <g class="notehead" id="note29.notehead">
+                                            <use xlink:href="#E0A4-1l5auym" x="16159" y="450" height="720px" width="720px"/>
+                                        </g>
+                                        <g id="note29.stem" class="stem">
+                                            <path d="M16168 478 L16168 1242" stroke="currentColor" stroke-width="18"/>
+                                        </g>
+                                    </g>
+                                    <g id="note30" class="note">
+                                        <g class="notehead" id="note30.notehead">
+                                            <use xlink:href="#E0A4-1l5auym" x="16475" y="360" height="720px" width="720px"/>
+                                        </g>
+                                        <g id="note30.stem" class="stem">
+                                            <path d="M16484 388 L16484 1152" stroke="currentColor" stroke-width="18"/>
+                                        </g>
+                                    </g>
+                                    <g id="note31" class="note">
+                                        <g class="notehead" id="note31.notehead">
+                                            <use xlink:href="#E0A4-1l5auym" x="16791" y="270" height="720px" width="720px"/>
+                                        </g>
+                                        <g id="note31.stem" class="stem">
+                                            <path d="M16800 298 L16800 1062" stroke="currentColor" stroke-width="18"/>
+                                        </g>
+                                        <g id="note31.accidental" class="accid"/>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="s1c8jrk" class="staff">
+                        <path d="M12491 2430 L17134 2430" stroke="currentColor" stroke-width="13"/>
+                        <path d="M12491 2610 L17134 2610" stroke="currentColor" stroke-width="13"/>
+                        <path d="M12491 2790 L17134 2790" stroke="currentColor" stroke-width="13"/>
+                        <path d="M12491 2970 L17134 2970" stroke="currentColor" stroke-width="13"/>
+                        <path d="M12491 3150 L17134 3150" stroke="currentColor" stroke-width="13"/>
+                        <g id="key2" class="keySig" visibility="hidden"/>
+                        <g id="l6tto8k" class="layer">
+                            <g id="rest13" class="mRest">
+                                <use xlink:href="#E4E3-1l5auym" x="14691" y="2610" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="pP1_m5.right_barline" class="barLine">
+                        <path id="pP1_m5.right_barline.barline_tok1" d="M17121 630 L17121 3150" stroke="currentColor" stroke-width="27" class="barline_tok"/>
+                    </g>
+                </g>
+                <g id="pP1_m6" class="measure">
+                    <g id="s1fuv6l1" class="staff">
+                        <path d="M17134 630 L20927 630" stroke="currentColor" stroke-width="13"/>
+                        <path d="M17134 810 L20927 810" stroke="currentColor" stroke-width="13"/>
+                        <path d="M17134 990 L20927 990" stroke="currentColor" stroke-width="13"/>
+                        <path d="M17134 1170 L20927 1170" stroke="currentColor" stroke-width="13"/>
+                        <path d="M17134 1350 L20927 1350" stroke="currentColor" stroke-width="13"/>
+                        <g class="ledgerLines above">
+                            <path d="M17266 450 L17588 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M17716 450 L18038 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M18166 450 L18488 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M18616 450 L18938 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M17266 270 L17588 270" stroke="currentColor" stroke-width="22"/>
+                            <path d="M17716 270 L18038 270" stroke="currentColor" stroke-width="22"/>
+                        </g>
+                        <g id="lwloyse" class="layer">
+                            <g id="beam13_parent" class="beam_parent">
+                                <polygon points="17314,990 18682,1080 18682,990 17314,900" id="beam13" class="beam"/>
+                                <g id="note32" class="note">
+                                    <g class="notehead" id="note32.notehead">
+                                        <use xlink:href="#E0A4-1l5auym" x="17314" y="180" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note32.stem" class="stem">
+                                        <path d="M17323 208 L17323 972" stroke="currentColor" stroke-width="18"/>
+                                    </g>
+                                </g>
+                                <g id="note33" class="note">
+                                    <g class="notehead" id="note33.notehead">
+                                        <use xlink:href="#E0A4-1l5auym" x="17764" y="180" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note33.stem" class="stem">
+                                        <path d="M17773 208 L17773 1002" stroke="currentColor" stroke-width="18"/>
+                                    </g>
+                                </g>
+                                <g id="note34" class="note">
+                                    <g class="notehead" id="note34.notehead">
+                                        <use xlink:href="#E0A4-1l5auym" x="18214" y="450" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note34.stem" class="stem">
+                                        <path d="M18223 478 L18223 1032" stroke="currentColor" stroke-width="18"/>
+                                    </g>
+                                </g>
+                                <g id="note35" class="note">
+                                    <g class="notehead" id="note35.notehead">
+                                        <use xlink:href="#E0A4-1l5auym" x="18664" y="450" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note35.stem" class="stem">
+                                        <path d="M18673 478 L18673 1062" stroke="currentColor" stroke-width="18"/>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="beam14_parent" class="beam_parent">
+                                <polygon points="19114,1440 20482,1485 20482,1395 19114,1350" id="beam14" class="beam"/>
+                                <g id="note36" class="note">
+                                    <g class="notehead" id="note36.notehead">
+                                        <use xlink:href="#E0A4-1l5auym" x="19114" y="630" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note36.stem" class="stem">
+                                        <path d="M19123 658 L19123 1422" stroke="currentColor" stroke-width="18"/>
+                                    </g>
+                                    <g id="note36.accidental" class="accid"/>
+                                </g>
+                                <g id="note37" class="note">
+                                    <g class="notehead" id="note37.notehead">
+                                        <use xlink:href="#E0A4-1l5auym" x="19564" y="630" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note37.stem" class="stem">
+                                        <path d="M19573 658 L19573 1437" stroke="currentColor" stroke-width="18"/>
+                                    </g>
+                                    <g id="note37.accidental" class="accid"/>
+                                </g>
+                                <g id="note38" class="note">
+                                    <g class="notehead" id="note38.notehead">
+                                        <use xlink:href="#E0A4-1l5auym" x="20014" y="810" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note38.stem" class="stem">
+                                        <path d="M20023 838 L20023 1452" stroke="currentColor" stroke-width="18"/>
+                                    </g>
+                                </g>
+                                <g id="note39" class="note">
+                                    <g class="notehead" id="note39.notehead">
+                                        <use xlink:href="#E0A4-1l5auym" x="20464" y="810" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note39.stem" class="stem">
+                                        <path d="M20473 838 L20473 1467" stroke="currentColor" stroke-width="18"/>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="s11f655i" class="staff">
+                        <path d="M17134 2430 L20927 2430" stroke="currentColor" stroke-width="13"/>
+                        <path d="M17134 2610 L20927 2610" stroke="currentColor" stroke-width="13"/>
+                        <path d="M17134 2790 L20927 2790" stroke="currentColor" stroke-width="13"/>
+                        <path d="M17134 2970 L20927 2970" stroke="currentColor" stroke-width="13"/>
+                        <path d="M17134 3150 L20927 3150" stroke="currentColor" stroke-width="13"/>
+                        <g id="l1gnnkk" class="layer">
+                            <g id="rest14" class="mRest">
+                                <use xlink:href="#E4E3-1l5auym" x="18909" y="2610" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="pP1_m6.right_barline" class="barLine">
+                        <path id="pP1_m6.right_barline.barline_tok1" d="M20914 630 L20914 3150" stroke="currentColor" stroke-width="27" class="barline_tok"/>
+                    </g>
+                </g>
+                <g id="pP1_m7" class="measure">
+                    <g id="squcgrb" class="staff">
+                        <path d="M20927 630 L23970 630" stroke="currentColor" stroke-width="13"/>
+                        <path d="M20927 810 L23970 810" stroke="currentColor" stroke-width="13"/>
+                        <path d="M20927 990 L23970 990" stroke="currentColor" stroke-width="13"/>
+                        <path d="M20927 1170 L23970 1170" stroke="currentColor" stroke-width="13"/>
+                        <path d="M20927 1350 L23970 1350" stroke="currentColor" stroke-width="13"/>
+                        <g class="ledgerLines above">
+                            <path d="M21509 450 L21831 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M21959 450 L22281 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M22409 450 L22731 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M22859 450 L23181 450" stroke="currentColor" stroke-width="22"/>
+                        </g>
+                        <g id="l3qqy8o" class="layer">
+                            <g id="beam15_parent" class="beam_parent">
+                                <polygon points="21315,0 22683,0 22683,90 21315,90" id="beam15" class="beam"/>
+                                <g id="note40" class="note">
+                                    <g class="notehead" id="note40.notehead">
+                                        <use xlink:href="#E0A4-1l5auym" x="21107" y="1080" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note40.stem" class="stem">
+                                        <path d="M21324 1052 L21324 18" stroke="currentColor" stroke-width="18"/>
+                                    </g>
+                                </g>
+                                <g id="note41" class="note">
+                                    <g class="notehead" id="note41.notehead">
+                                        <use xlink:href="#E0A4-1l5auym" x="21557" y="450" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note41.stem" class="stem">
+                                        <path d="M21774 422 L21774 18" stroke="currentColor" stroke-width="18"/>
+                                    </g>
+                                </g>
+                                <g id="note42" class="note">
+                                    <g class="notehead" id="note42.notehead">
+                                        <use xlink:href="#E0A4-1l5auym" x="22007" y="450" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note42.stem" class="stem">
+                                        <path d="M22224 422 L22224 18" stroke="currentColor" stroke-width="18"/>
+                                    </g>
+                                </g>
+                                <g id="note43" class="note">
+                                    <g class="notehead" id="note43.notehead">
+                                        <use xlink:href="#E0A4-1l5auym" x="22457" y="450" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note43.stem" class="stem">
+                                        <path d="M22674 422 L22674 18" stroke="currentColor" stroke-width="18"/>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="note44.tremolo_single" class="bTrem">
+                                <use xlink:href="#E220-1l5auym" x="22916" y="810" height="720px" width="720px" id="note44.tremolo_single.line1" class="bTrem_line"/>
+                                <g id="note44" class="note">
+                                    <g class="notehead" id="note44.notehead">
+                                        <use xlink:href="#E0A3-1l5auym" x="22907" y="450" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note44.stem" class="stem">
+                                        <path d="M22916 475 L22916 1080" stroke="currentColor" stroke-width="18"/>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="siowsrz" class="staff">
+                        <path d="M20927 2430 L23970 2430" stroke="currentColor" stroke-width="13"/>
+                        <path d="M20927 2610 L23970 2610" stroke="currentColor" stroke-width="13"/>
+                        <path d="M20927 2790 L23970 2790" stroke="currentColor" stroke-width="13"/>
+                        <path d="M20927 2970 L23970 2970" stroke="currentColor" stroke-width="13"/>
+                        <path d="M20927 3150 L23970 3150" stroke="currentColor" stroke-width="13"/>
+                        <g id="l1dxt88x" class="layer">
+                            <g id="rest15" class="mRest">
+                                <use xlink:href="#E4E3-1l5auym" x="22327" y="2610" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="pP1_m7.right_barline" class="barLine">
+                        <path id="pP1_m7.right_barline.barline_tok1" d="M23957 630 L23957 3150" stroke="currentColor" stroke-width="27" class="barline_tok"/>
+                    </g>
+                </g>
+                <g id="pP1_m8" class="measure">
+                    <g id="sqmorkv" class="staff">
+                        <path d="M23970 630 L25663 630" stroke="currentColor" stroke-width="13"/>
+                        <path d="M23970 810 L25663 810" stroke="currentColor" stroke-width="13"/>
+                        <path d="M23970 990 L25663 990" stroke="currentColor" stroke-width="13"/>
+                        <path d="M23970 1170 L25663 1170" stroke="currentColor" stroke-width="13"/>
+                        <path d="M23970 1350 L25663 1350" stroke="currentColor" stroke-width="13"/>
+                        <g id="key3" class="keySig" visibility="hidden"/>
+                        <g id="l59p7ze" class="layer">
+                            <g id="pP1_m8.measure_repeat" class="mRpt">
+                                <use xlink:href="#E500-1l5auym" x="24621" y="990" height="720px" width="720px"/>
+                                <use xlink:href="#E882-1l5auym" x="24709" y="540" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="s1i3t81p" class="staff">
+                        <path d="M23970 2430 L25663 2430" stroke="currentColor" stroke-width="13"/>
+                        <path d="M23970 2610 L25663 2610" stroke="currentColor" stroke-width="13"/>
+                        <path d="M23970 2790 L25663 2790" stroke="currentColor" stroke-width="13"/>
+                        <path d="M23970 2970 L25663 2970" stroke="currentColor" stroke-width="13"/>
+                        <path d="M23970 3150 L25663 3150" stroke="currentColor" stroke-width="13"/>
+                        <g id="key3" class="keySig" visibility="hidden"/>
+                        <g id="llat9ys" class="layer">
+                            <g id="m1ocuqbs" class="mRpt">
+                                <use xlink:href="#E500-1l5auym" x="24621" y="2790" height="720px" width="720px"/>
+                                <use xlink:href="#E882-1l5auym" x="24709" y="2340" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="pP1_m8.right_barline" class="barLine">
+                        <path id="pP1_m8.right_barline.barline_tok1" d="M25650 630 L25650 3150" stroke="currentColor" stroke-width="27" class="barline_tok"/>
+                    </g>
+                </g>
+                <g id="pP1_m9" class="measure">
+                    <g id="sfjzldo" class="staff">
+                        <path d="M25663 630 L27356 630" stroke="currentColor" stroke-width="13"/>
+                        <path d="M25663 810 L27356 810" stroke="currentColor" stroke-width="13"/>
+                        <path d="M25663 990 L27356 990" stroke="currentColor" stroke-width="13"/>
+                        <path d="M25663 1170 L27356 1170" stroke="currentColor" stroke-width="13"/>
+                        <path d="M25663 1350 L27356 1350" stroke="currentColor" stroke-width="13"/>
+                        <g id="l1s6fjor" class="layer">
+                            <g id="pP1_m9.measure_repeat" class="mRpt">
+                                <use xlink:href="#E500-1l5auym" x="26314" y="990" height="720px" width="720px"/>
+                                <use xlink:href="#E883-1l5auym" x="26404" y="540" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="s1qs177n" class="staff">
+                        <path d="M25663 2430 L27356 2430" stroke="currentColor" stroke-width="13"/>
+                        <path d="M25663 2610 L27356 2610" stroke="currentColor" stroke-width="13"/>
+                        <path d="M25663 2790 L27356 2790" stroke="currentColor" stroke-width="13"/>
+                        <path d="M25663 2970 L27356 2970" stroke="currentColor" stroke-width="13"/>
+                        <path d="M25663 3150 L27356 3150" stroke="currentColor" stroke-width="13"/>
+                        <g id="lv8e3w6" class="layer">
+                            <g id="mbiajpj" class="mRpt">
+                                <use xlink:href="#E500-1l5auym" x="26314" y="2790" height="720px" width="720px"/>
+                                <use xlink:href="#E883-1l5auym" x="26404" y="2340" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="pP1_m9.right_barline" class="barLine">
+                        <path id="pP1_m9.right_barline.barline_tok1" d="M27343 630 L27343 3150" stroke="currentColor" stroke-width="27" class="barline_tok"/>
+                    </g>
+                </g>
+                <g id="pP1_m10" class="measure">
+                    <g id="s1bxhflj" class="staff">
+                        <path d="M27356 630 L29049 630" stroke="currentColor" stroke-width="13"/>
+                        <path d="M27356 810 L29049 810" stroke="currentColor" stroke-width="13"/>
+                        <path d="M27356 990 L29049 990" stroke="currentColor" stroke-width="13"/>
+                        <path d="M27356 1170 L29049 1170" stroke="currentColor" stroke-width="13"/>
+                        <path d="M27356 1350 L29049 1350" stroke="currentColor" stroke-width="13"/>
+                        <g id="lfb9x2m" class="layer">
+                            <g id="pP1_m10.measure_repeat" class="mRpt">
+                                <use xlink:href="#E500-1l5auym" x="28007" y="990" height="720px" width="720px"/>
+                                <use xlink:href="#E884-1l5auym" x="28096" y="540" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="s1u6zdcg" class="staff">
+                        <path d="M27356 2430 L29049 2430" stroke="currentColor" stroke-width="13"/>
+                        <path d="M27356 2610 L29049 2610" stroke="currentColor" stroke-width="13"/>
+                        <path d="M27356 2790 L29049 2790" stroke="currentColor" stroke-width="13"/>
+                        <path d="M27356 2970 L29049 2970" stroke="currentColor" stroke-width="13"/>
+                        <path d="M27356 3150 L29049 3150" stroke="currentColor" stroke-width="13"/>
+                        <g id="l817xjb" class="layer">
+                            <g id="m46oekh" class="mRpt">
+                                <use xlink:href="#E500-1l5auym" x="28007" y="2790" height="720px" width="720px"/>
+                                <use xlink:href="#E884-1l5auym" x="28096" y="2340" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="pP1_m10.right_barline" class="barLine">
+                        <path id="pP1_m10.right_barline.barline_tok1" d="M29036 630 L29036 3150" stroke="currentColor" stroke-width="27" class="barline_tok"/>
+                    </g>
+                </g>
+                <g id="pP1_m11" class="measure">
+                    <g id="sfaxrvv" class="staff">
+                        <path d="M29049 630 L32432 630" stroke="currentColor" stroke-width="13"/>
+                        <path d="M29049 810 L32432 810" stroke="currentColor" stroke-width="13"/>
+                        <path d="M29049 990 L32432 990" stroke="currentColor" stroke-width="13"/>
+                        <path d="M29049 1170 L32432 1170" stroke="currentColor" stroke-width="13"/>
+                        <path d="M29049 1350 L32432 1350" stroke="currentColor" stroke-width="13"/>
+                        <g class="ledgerLines above">
+                            <path d="M29181 450 L29503 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M30451 450 L30773 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M30901 450 L31223 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M32041 450 L32363 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M30451 270 L30773 270" stroke="currentColor" stroke-width="22"/>
+                            <path d="M32041 270 L32363 270" stroke="currentColor" stroke-width="22"/>
+                        </g>
+                        <g id="l1l2qnmr" class="layer">
+                            <g id="note60" class="note">
+                                <g class="notehead" id="note60.notehead">
+                                    <use xlink:href="#E0A4-1l5auym" x="29229" y="450" height="720px" width="720px"/>
+                                </g>
+                                <g id="note60.stem" class="stem">
+                                    <path d="M29238 478 L29238 1080" stroke="currentColor" stroke-width="18"/>
+                                </g>
+                            </g>
+                            <g id="rest19" class="rest">
+                                <use xlink:href="#E4E6-1l5auym" x="29919" y="990" height="720px" width="720px"/>
+                                <g id="rest19.dots_parent" class="dots">
+                                    <ellipse cx="30207" cy="900" rx="36" ry="36" id="rest19.dot1" class="single_dot"/>
+                                </g>
+                            </g>
+                            <g id="note61.tremolo_single" class="bTrem">
+                                <use xlink:href="#E220-1l5auym" x="30508" y="630" height="720px" width="720px" id="note61.tremolo_single.line1" class="bTrem_line"/>
+                                <g id="note61" class="note">
+                                    <g class="notehead" id="note61.notehead">
+                                        <use xlink:href="#E0A4-1l5auym" x="30499" y="270" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note61.stem" class="stem">
+                                        <path d="M30508 298 L30508 990" stroke="currentColor" stroke-width="18"/>
+                                        <g id="note61.stem.flag" class="flag">
+                                            <use xlink:href="#E241-1l5auym" x="30499" y="990" height="720px" width="720px"/>
+                                        </g>
+                                    </g>
+                                    <g id="note61.accidental" class="accid"/>
+                                </g>
+                            </g>
+                            <g id="note62" class="note">
+                                <g class="notehead" id="note62.notehead">
+                                    <use xlink:href="#E0A4-1l5auym" x="30949" y="450" height="720px" width="720px"/>
+                                </g>
+                                <g id="note62.stem" class="stem">
+                                    <path d="M30958 478 L30958 1080" stroke="currentColor" stroke-width="18"/>
+                                </g>
+                            </g>
+                            <g id="rest20" class="rest">
+                                <use xlink:href="#E4E6-1l5auym" x="31639" y="990" height="720px" width="720px"/>
+                            </g>
+                            <g id="note63" class="note">
+                                <g class="notehead" id="note63.notehead">
+                                    <use xlink:href="#E0A4-1l5auym" x="32089" y="270" height="720px" width="720px"/>
+                                </g>
+                                <g id="note63.stem" class="stem">
+                                    <path d="M32098 298 L32098 1035" stroke="currentColor" stroke-width="18"/>
+                                    <g id="note63.stem.flag" class="flag">
+                                        <use xlink:href="#E243-1l5auym" x="32089" y="1035" height="720px" width="720px"/>
+                                    </g>
+                                </g>
+                                <g id="note63.accidental" class="accid"/>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="s2ww2dv" class="staff">
+                        <path d="M29049 2430 L32432 2430" stroke="currentColor" stroke-width="13"/>
+                        <path d="M29049 2610 L32432 2610" stroke="currentColor" stroke-width="13"/>
+                        <path d="M29049 2790 L32432 2790" stroke="currentColor" stroke-width="13"/>
+                        <path d="M29049 2970 L32432 2970" stroke="currentColor" stroke-width="13"/>
+                        <path d="M29049 3150 L32432 3150" stroke="currentColor" stroke-width="13"/>
+                        <g id="l10mxjuh" class="layer">
+                            <g id="rest21" class="mRest">
+                                <use xlink:href="#E4E3-1l5auym" x="30619" y="2610" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="pP1_m11.right_barline" class="barLine">
+                        <path id="pP1_m11.right_barline.barline_tok1" d="M32419 630 L32419 3150" stroke="currentColor" stroke-width="27" class="barline_tok"/>
+                    </g>
+                </g>
+                <g id="pP1_m12" class="measure">
+                    <g id="sp2qh88" class="staff">
+                        <path d="M32432 630 L35825 630" stroke="currentColor" stroke-width="13"/>
+                        <path d="M32432 810 L35825 810" stroke="currentColor" stroke-width="13"/>
+                        <path d="M32432 990 L35825 990" stroke="currentColor" stroke-width="13"/>
+                        <path d="M32432 1170 L35825 1170" stroke="currentColor" stroke-width="13"/>
+                        <path d="M32432 1350 L35825 1350" stroke="currentColor" stroke-width="13"/>
+                        <g class="ledgerLines above">
+                            <path d="M32564 450 L32886 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M33594 450 L33916 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M34044 450 L34366 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M35314 450 L35636 450" stroke="currentColor" stroke-width="22"/>
+                            <path d="M32564 270 L32886 270" stroke="currentColor" stroke-width="22"/>
+                        </g>
+                        <g id="l14qvn6a" class="layer">
+                            <g id="note64" class="note">
+                                <g class="notehead" id="note64.notehead">
+                                    <use xlink:href="#E0A4-1l5auym" x="32612" y="270" height="720px" width="720px"/>
+                                </g>
+                                <g id="note64.stem" class="stem">
+                                    <path d="M32621 298 L32621 990" stroke="currentColor" stroke-width="18"/>
+                                    <g id="note64.stem.flag" class="flag">
+                                        <use xlink:href="#E241-1l5auym" x="32612" y="990" height="720px" width="720px"/>
+                                    </g>
+                                </g>
+                                <g id="note64.accidental" class="accid"/>
+                            </g>
+                            <g id="rest22" class="rest">
+                                <use xlink:href="#E4E6-1l5auym" x="33062" y="990" height="720px" width="720px"/>
+                                <g id="rest22.dots_parent" class="dots">
+                                    <ellipse cx="33350" cy="900" rx="36" ry="36" id="rest22.dot1" class="single_dot"/>
+                                </g>
+                            </g>
+                            <g id="note65.tremolo_single" class="bTrem">
+                                <use xlink:href="#E220-1l5auym" x="33651" y="810" height="720px" width="720px" id="note65.tremolo_single.line1" class="bTrem_line"/>
+                                <g id="note65" class="note">
+                                    <g class="notehead" id="note65.notehead">
+                                        <use xlink:href="#E0A4-1l5auym" x="33642" y="450" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note65.stem" class="stem">
+                                        <path d="M33651 478 L33651 1125" stroke="currentColor" stroke-width="18"/>
+                                        <g id="note65.stem.flag" class="flag">
+                                            <use xlink:href="#E241-1l5auym" x="33642" y="1125" height="720px" width="720px"/>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                            <g id="note66" class="note">
+                                <g class="notehead" id="note66.notehead">
+                                    <use xlink:href="#E0A4-1l5auym" x="34092" y="450" height="720px" width="720px"/>
+                                </g>
+                                <g id="note66.stem" class="stem">
+                                    <path d="M34101 478 L34101 1080" stroke="currentColor" stroke-width="18"/>
+                                </g>
+                            </g>
+                            <g id="rest23" class="rest">
+                                <use xlink:href="#E4E6-1l5auym" x="34782" y="990" height="720px" width="720px"/>
+                                <g id="rest23.dots_parent" class="dots">
+                                    <ellipse cx="35070" cy="900" rx="36" ry="36" id="rest23.dot1" class="single_dot"/>
+                                </g>
+                            </g>
+                            <g id="note67.tremolo_single" class="bTrem">
+                                <use xlink:href="#E220-1l5auym" x="35371" y="810" height="720px" width="720px" id="note67.tremolo_single.line1" class="bTrem_line"/>
+                                <g id="note67" class="note">
+                                    <g class="notehead" id="note67.notehead">
+                                        <use xlink:href="#E0A4-1l5auym" x="35362" y="450" height="720px" width="720px"/>
+                                    </g>
+                                    <g id="note67.stem" class="stem">
+                                        <path d="M35371 478 L35371 1125" stroke="currentColor" stroke-width="18"/>
+                                        <g id="note67.stem.flag" class="flag">
+                                            <use xlink:href="#E241-1l5auym" x="35362" y="1125" height="720px" width="720px"/>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="s1q5r5dl" class="staff">
+                        <path d="M32432 2430 L35825 2430" stroke="currentColor" stroke-width="13"/>
+                        <path d="M32432 2610 L35825 2610" stroke="currentColor" stroke-width="13"/>
+                        <path d="M32432 2790 L35825 2790" stroke="currentColor" stroke-width="13"/>
+                        <path d="M32432 2970 L35825 2970" stroke="currentColor" stroke-width="13"/>
+                        <path d="M32432 3150 L35825 3150" stroke="currentColor" stroke-width="13"/>
+                        <g id="l1ea5r9t" class="layer">
+                            <g id="rest24" class="mRest">
+                                <use xlink:href="#E4E3-1l5auym" x="34007" y="2610" height="720px" width="720px"/>
+                            </g>
+                        </g>
+                    </g>
+                    <g id="pP1_m12.right_barline" class="barLine">
+                        <path id="pP1_m12.right_barline.barline_tok1" d="M35812 630 L35812 3150" stroke="currentColor" stroke-width="27" class="barline_tok"/>
+                    </g>
+                </g>
+                <g id="s1b2gwrw" class="systemMilestoneEnd s1nv62j3"/>
+            </g>
+            <g id="ptmwsmf" class="pageMilestoneEnd s5qomdj"/>
+            <g id="pq84ym2" class="pageMilestoneEnd m19q97q6"/>
+        </g>
+    </svg>
+</svg>

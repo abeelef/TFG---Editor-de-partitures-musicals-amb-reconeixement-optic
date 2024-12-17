@@ -612,10 +612,6 @@ image_label.bind("<Button-5>", lambda e: aplicar_zoom(type("Event", (object,), {
 # Iniciar el bucle principal de l'aplicació
 root.mainloop()
 
-
-
-
-
 '''
 convertir_mscz_a_musicxml() ha sigut part d'una implementacio fallida de cara a unificar directament arxius mscz. De totes maneres, 
 la utilitat i funció base si va bé. Així que es deixa aquí per a possibles implementacions a futur que involucressin aquests processos
