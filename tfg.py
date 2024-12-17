@@ -617,8 +617,8 @@ root.mainloop()
 
 
 '''
-Tant convertir_mscz_a_musicxml() com unificar_partitures() han sigut implementacions fallides de cara a unificar directament arxius mscz. De totes maneres, 
-la utilitat i funció d'aquestes 2 funcions base si funcionen així que es deixen aquí per a possibles implementacions a futur que involucressin aquests processos
+convertir_mscz_a_musicxml() ha sigut part d'una implementacio fallida de cara a unificar directament arxius mscz. De totes maneres, 
+la utilitat i funció base si va bé. Així que es deixa aquí per a possibles implementacions a futur que involucressin aquests processos
 '''
 def convertir_mscz_a_musicxml(musescore_path, input_mscz, output_folder):
     """
@@ -632,30 +632,6 @@ def convertir_mscz_a_musicxml(musescore_path, input_mscz, output_folder):
         print(f"Error en convertir {input_mscz}: {e}")
         return None
 
-def unificar_partitures(arxius_musicxml):
-    """
-    Uneix múltiples partitures MusicXML en una sola partitura.
-    """
-    partitura_unida = stream.Score()
-    temps_actual = 0  # Manté el temps on afegir la següent partitura
 
-    for index, arxiu in enumerate(arxius_musicxml):
-        try:
-            print(f"Processant {arxiu}...")
-            partitura = converter.parse(arxiu)
-
-            # Ajustar el temps d'inici de cada nota/resta
-            for part in partitura.parts:
-                for element in part.flat.notesAndRests:
-                    element.offset += temps_actual
-
-                # Afegir la part ajustada a la partitura unida
-                partitura_unida.append(part)
-
-            # Actualitzar el temps actual per la següent partitura
-            temps_actual += partitura.duration.quarterLength
-        except Exception as e:
-            print(f"No s'ha pogut processar {arxiu}: {e}")
-    return partitura_unida
 
 
