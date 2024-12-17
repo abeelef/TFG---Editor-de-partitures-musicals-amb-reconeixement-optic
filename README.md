@@ -12,6 +12,7 @@ Aquest projecte és un gestor de partitures creat com a treball final de grau di
 - **Navegar entre línies retallades**: Navega per les línies retallades de la partitura anteriorment.
 - **MuseScore Integrat**: El projecte utilitza MuseScore4 per obrir,editar i guardar partitures en format MusicXML associades a la imatge de la partitura.
 - **Zoom i Drag**: Permet fer zoom sobre la partitura i desplaçar-la (drag) per veure'n millor les línies retallades.
+- **Compatibilitat amb OMR**: Codi preparat de cara a la unió amb el moment de la finalització del OMR.
 
 ## Requisits
 
