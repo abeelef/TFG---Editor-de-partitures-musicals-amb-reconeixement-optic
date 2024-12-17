@@ -461,7 +461,6 @@ def unificar_musicxml(self):
     except Exception as e:
         messagebox.showwarning("Error", f"No se pudo guardar la partitura unificada: {str(e)}")
 
-
 ##########################################################################################################################################
 #######################################        CREACIÓ INTERFÍCIE PRINCIPAL      #########################################################
 ##########################################################################################################################################
@@ -613,5 +612,50 @@ image_label.bind("<Button-5>", lambda e: aplicar_zoom(type("Event", (object,), {
 # Iniciar el bucle principal de l'aplicació
 root.mainloop()
 
+
+
+
+
+'''
+Tant convertir_mscz_a_musicxml() com unificar_partitures() han sigut implementacions fallides de cara a unificar directament arxius mscz. De totes maneres, 
+la utilitat i funció d'aquestes 2 funcions base si funcionen així que es deixen aquí per a possibles implementacions a futur que involucressin aquests processos
+'''
+def convertir_mscz_a_musicxml(musescore_path, input_mscz, output_folder):
+    """
+    Converteix un fitxer MSCZ a MusicXML utilitzant MuseScore des de la línia de comandes.
+    """
+    output_musicxml = os.path.join(output_folder, os.path.splitext(os.path.basename(input_mscz))[0] + ".musicxml")
+    try:
+        subprocess.run([musescore_path, "-o", output_musicxml, input_mscz], check=True)
+        return output_musicxml
+    except subprocess.CalledProcessError as e:
+        print(f"Error en convertir {input_mscz}: {e}")
+        return None
+
+def unificar_partitures(arxius_musicxml):
+    """
+    Uneix múltiples partitures MusicXML en una sola partitura.
+    """
+    partitura_unida = stream.Score()
+    temps_actual = 0  # Manté el temps on afegir la següent partitura
+
+    for index, arxiu in enumerate(arxius_musicxml):
+        try:
+            print(f"Processant {arxiu}...")
+            partitura = converter.parse(arxiu)
+
+            # Ajustar el temps d'inici de cada nota/resta
+            for part in partitura.parts:
+                for element in part.flat.notesAndRests:
+                    element.offset += temps_actual
+
+                # Afegir la part ajustada a la partitura unida
+                partitura_unida.append(part)
+
+            # Actualitzar el temps actual per la següent partitura
+            temps_actual += partitura.duration.quarterLength
+        except Exception as e:
+            print(f"No s'ha pogut processar {arxiu}: {e}")
+    return partitura_unida
 
 
