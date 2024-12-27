@@ -418,49 +418,6 @@ def actualizar_zoom_drag():
 
 
 
-def unificar_musicxml(self):
-    global imagen_actual_base  # Usar la variable global
-    # Ruta fija de la carpeta donde están los archivos .musicxml
-    musescore_folder = r"C:\Users\abel\Desktop\UNI\TFG\exemplesMusicXML\exemplesMusicXML\CVCDOL.S01P01\MUSICXML"
-
-    # Verificar si la carpeta MUSESCORE existe
-    if not os.path.exists(musescore_folder):
-        messagebox.showinfo("Información", f"No se encontró la carpeta MUSICXML en {musescore_folder}.")
-        return
-
-    # Buscar archivos .musicxml en la carpeta MUSESCORE que coincidan con el nombre base
-    archivos_xml = [
-        os.path.join(musescore_folder, file)
-        for file in os.listdir(musescore_folder)
-        if file.endswith(".musicxml") and file.startswith(imagen_actual_base)
-    ]
-
-    # Si no se encontraron archivos MusicXML
-    if not archivos_xml:
-        messagebox.showinfo("Información", "No se encontraron archivos MusicXML para unificar.")
-        return
-
-    # Crear un flujo vacío donde se añadirán las partituras
-    partitura_unida = stream.Score()
-
-    # Iterar sobre cada archivo y agregar su contenido al flujo
-    for archivo in archivos_xml:
-        try:
-            partitura = converter.parse(archivo)  # Cargar el archivo MusicXML
-            partitura_unida.append(partitura)    # Añadir al flujo
-        except Exception as e:
-            messagebox.showwarning("Error", f"No se pudo procesar {archivo}: {str(e)}")
-
-    # Guardar el archivo combinado
-    output_path = os.path.join(musescore_folder, "partitura_unida.musicxml")
-    output_path = os.path.normpath(output_path)  # Normalizar ruta de salida
-
-    try:
-        partitura_unida.write('musicxml', fp=output_path)
-        messagebox.showinfo("Éxito", f"Archivos unidos y guardados como '{output_path}'")
-    except Exception as e:
-        messagebox.showwarning("Error", f"No se pudo guardar la partitura unificada: {str(e)}")
-
 ##########################################################################################################################################
 #######################################        CREACIÓ INTERFÍCIE PRINCIPAL      #########################################################
 ##########################################################################################################################################
@@ -612,9 +569,14 @@ image_label.bind("<Button-5>", lambda e: aplicar_zoom(type("Event", (object,), {
 # Iniciar el bucle principal de l'aplicació
 root.mainloop()
 
+
+
+
+###FUNCIONS FINALMENT NO USADES JA SIGUI PER QUE FALLEN O PERQUÈ AL FINAL NO HAN SIGUT NECESSÀRIES:
+
 '''
-convertir_mscz_a_musicxml() ha sigut part d'una implementacio fallida de cara a unificar directament arxius mscz. De totes maneres, 
-la utilitat i funció base si va bé. Així que es deixa aquí per a possibles implementacions a futur que involucressin aquests processos
+convertir_mscz_a_musicxml() ha sigut part d'una implementacio que s'anava a usar de cara a unificar directament arxius mscz. De totes maneres, 
+la utilitat i funció del pas a xml si va.
 '''
 def convertir_mscz_a_musicxml(musescore_path, input_mscz, output_folder):
     """
@@ -627,6 +589,52 @@ def convertir_mscz_a_musicxml(musescore_path, input_mscz, output_folder):
     except subprocess.CalledProcessError as e:
         print(f"Error en convertir {input_mscz}: {e}")
         return None
+
+'''
+Falla.
+'''
+def unificar_musicxml(self):
+    global imagen_actual_base  # Usar la variable global
+    # Ruta fija de la carpeta donde están los archivos .musicxml
+    musescore_folder = r"C:\Users\abel\Desktop\UNI\TFG\exemplesMusicXML\exemplesMusicXML\CVCDOL.S01P01\MUSICXML"
+
+    # Verificar si la carpeta MUSESCORE existe
+    if not os.path.exists(musescore_folder):
+        messagebox.showinfo("Información", f"No se encontró la carpeta MUSICXML en {musescore_folder}.")
+        return
+
+    # Buscar archivos .musicxml en la carpeta MUSESCORE que coincidan con el nombre base
+    archivos_xml = [
+        os.path.join(musescore_folder, file)
+        for file in os.listdir(musescore_folder)
+        if file.endswith(".musicxml") and file.startswith(imagen_actual_base)
+    ]
+
+    # Si no se encontraron archivos MusicXML
+    if not archivos_xml:
+        messagebox.showinfo("Información", "No se encontraron archivos MusicXML para unificar.")
+        return
+
+    # Crear un flujo vacío donde se añadirán las partituras
+    partitura_unida = stream.Score()
+
+    # Iterar sobre cada archivo y agregar su contenido al flujo
+    for archivo in archivos_xml:
+        try:
+            partitura = converter.parse(archivo)  # Cargar el archivo MusicXML
+            partitura_unida.append(partitura)    # Añadir al flujo
+        except Exception as e:
+            messagebox.showwarning("Error", f"No se pudo procesar {archivo}: {str(e)}")
+
+    # Guardar el archivo combinado
+    output_path = os.path.join(musescore_folder, "partitura_unida.musicxml")
+    output_path = os.path.normpath(output_path)  # Normalizar ruta de salida
+
+    try:
+        partitura_unida.write('musicxml', fp=output_path)
+        messagebox.showinfo("Éxito", f"Archivos unidos y guardados como '{output_path}'")
+    except Exception as e:
+        messagebox.showwarning("Error", f"No se pudo guardar la partitura unificada: {str(e)}")
 
 
 
