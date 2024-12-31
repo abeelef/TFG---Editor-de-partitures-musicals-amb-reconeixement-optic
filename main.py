@@ -4,6 +4,9 @@ from PIL import Image, ImageTk, ImageDraw, ImageEnhance
 import subprocess, os, re, time, pyautogui
 import pygetwindow as gw
 from music21 import converter, stream
+import sqlite3
+import os
+from datetime import datetime
 
 # VARIABLES GLOBALS
 # Variables per emmagatzemar l'estat de la imatge i retalls
@@ -35,6 +38,9 @@ def obrir_imatge():
     if file_path:
         carregar_imatge(file_path)  # Carrega la imatge seleccionada
         obrir_musescore(file_path)  # Obre MuseScore amb els fitxers relacionats
+        activar_bd()
+        insertar_o_actualizar(file_path, nom_imatge)
+
 
 
 def carregar_imatge(path):
@@ -63,8 +69,14 @@ def mostrar_imatge(image):
     """
     Mostra la imatge proporcionada en l'etiqueta d'imatge (Tkinter).
     """
+    # Converteix la imatge proporcionada (de PIL) al format compatible amb Tkinter
     img = ImageTk.PhotoImage(image)
+    
+    # Actualitza la configuració de l'etiqueta d'imatge (image_label) per mostrar la nova imatge
     image_label.config(image=img)
+    
+    # Assigna la imatge a una propietat de l'etiqueta per evitar que es perdi la referència
+    # (Això és necessari per evitar que Python elimini l'objecte img de la memòria)
     image_label.image = img
 
 
@@ -126,6 +138,7 @@ def guardar_musescore():
             pyautogui.hotkey('ctrl', 's')  # Simula 'Ctrl + S'
             time.sleep(1)
             print(f"Archivo '{ventana.title}' guardado correctamente.")
+            actualitzar_data_edicio(nombre_imagen_sin_extension)
     else:
         print(f"No se encontraron ventanas de MuseScore con el archivo que contiene '{nombre_imagen_sin_extension}.musicxml'.")
 
@@ -211,7 +224,91 @@ def retallar():
 
 
 def activar_desactivar_marca():
-    return None       
+    """
+    Activa o desactiva la funcionalitat de la marca.
+    La marca es col·loca automàticament al centre de la imatge i es pot moure amb les fletxes del teclat.
+    """
+    global marca_activa, marca_coords, current_image
+
+    # Alternar l'estat de la funcionalitat de la marca
+    marca_activa = not globals().get('marca_activa', False)
+
+    if marca_activa:
+        if not current_image:
+            messagebox.showwarning("Advertència", "No hi ha cap imatge carregada per activar la marca.")
+            return
+
+        # Col·locar la marca inicialment al centre de la imatge
+        marca_coords = (current_image.width // 2, current_image.height // 2)
+        actualitzar_marca()  # Mostrar la marca inicial
+
+        # Informar l'usuari que pot moure la marca amb les fletxes
+        messagebox.showinfo("Marca Activa", "La marca està activa. Pots moure-la amb les fletxes del teclat.")
+
+        # Vincular les tecles per moure la marca
+        root.bind("<Up>", moure_marca)
+        root.bind("<Down>", moure_marca)
+        root.bind("<Left>", moure_marca)
+        root.bind("<Right>", moure_marca)
+    else:
+        # Desvincular els esdeveniments i restaurar la imatge original
+        root.unbind("<Up>")
+        root.unbind("<Down>")
+        root.unbind("<Left>")
+        root.unbind("<Right>")
+        mostrar_imatge(current_image)
+        marca_coords = None  # Reiniciar les coordenades de la marca
+
+
+def moure_marca(event):
+    """
+    Mou la marca en la direcció indicada per les fletxes del teclat.
+    """
+    global marca_coords
+
+    if not marca_coords:
+        messagebox.showwarning("Advertència", "No hi ha cap marca per moure.")
+        return
+
+    # Actualitzar les coordenades de la marca segons la tecla pressionada
+    x, y = marca_coords
+    if event.keysym == "Up":
+        y = max(0, y - 10)
+    elif event.keysym == "Down":
+        y = min(current_image.height, y + 10)
+    elif event.keysym == "Left":
+        x = max(0, x - 10)
+    elif event.keysym == "Right":
+        x = min(current_image.width, x + 10)
+    marca_coords = (x, y)
+
+    # Actualitzar la imatge amb la marca movent-se
+    actualitzar_marca()
+
+
+def actualitzar_marca():
+    """
+    Redibuixa la imatge amb la marca a les coordenades actuals.
+    """
+    global marca_coords, current_image
+
+    if not current_image or not marca_coords:
+        return
+
+    # Crear una còpia de la imatge actual
+    image_with_mark = current_image.copy()
+    draw = ImageDraw.Draw(image_with_mark)
+
+    # Coordenades de la marca
+    x, y = marca_coords
+    size = 10  # Mida de la creu
+
+    # Dibuixar una creu com a marca centrada
+    draw.line((x - size, y - size, x + size, y + size), fill="red", width=2)  # Diagonal 1
+    draw.line((x - size, y + size, x + size, y - size), fill="red", width=2)  # Diagonal 2
+
+    # Mostrar la imatge amb la marca
+    mostrar_imatge(image_with_mark)
 
 
 def eliminar_ultim_retall():
@@ -417,14 +514,218 @@ def actualizar_zoom_drag():
         mostrar_imatge(centered_image)  # Mostrar la imatge final al canvas
 
 
+##########################################################################################################################################
+################################################   PART DE LA BASE DE DADES      #########################################################
+##########################################################################################################################################
+
+def activar_bd():
+    """
+    Crea la base de dades i la taula necessària si no existeixen.
+    La base de dades emmagatzema informació sobre les imatges, com ara la seva ruta,
+    nom, data de creació i data de l'última edició.
+    """
+    # Ruta de la base de dades
+    db_path = 'gestor_partitures.db'
+
+    # Comprova si la base de dades ja existeix
+    if os.path.exists(db_path):
+        print("BD ABIERTA")  # Mostra un missatge indicant que la base de dades està disponible
+    else:
+        # Si no existeix, crea la base de dades i la taula
+        conn = sqlite3.connect(db_path)  # Estableix la connexió amb la base de dades
+        cursor = conn.cursor()  # Crea un cursor per executar consultes SQL
+
+        # Crea la taula `imagenes` si no existeix
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS imagenes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,  # Clau primària, increment automàtic
+            ruta_imagen TEXT UNIQUE,  # Ruta única per a cada imatge
+            nombre_imagen TEXT UNIQUE,  # Nom de la imatge únic
+            fecha_creacion TEXT DEFAULT CURRENT_TIMESTAMP,  # Data de creació automàtica
+            fecha_edicion TEXT DEFAULT CURRENT_TIMESTAMP  # Data d'edició automàtica
+        )""")
+
+        # Guarda els canvis a la base de dades i tanca la connexió
+        conn.commit()  # Confirma els canvis
+        conn.close()  # Tanca la connexió amb la base de dades
+        print("BD y tabla creada correctamente.")  # Missatge confirmant la creació
+
+
+def insertar_o_actualizar(ruta_imagen, nombre_imagen):
+    """
+    Inserta un nou registre a la base de dades amb la ruta i el nom de la imatge,
+    o bé actualitza la data d'edició si el registre ja existeix.
+    """
+    db_path = 'gestor_partitures.db'  # Ruta de la base de dades
+    conn = sqlite3.connect(db_path)  # Estableix la connexió amb la base de dades
+    cursor = conn.cursor()  # Crea un cursor per executar consultes SQL
+
+    # Verifica si ja existeix un registre amb la mateixa ruta o nom de la imatge
+    cursor.execute("""
+    SELECT id FROM imagenes WHERE ruta_imagen = ? OR nombre_imagen = ?
+    """, (ruta_imagen, nombre_imagen))
+    resultado = cursor.fetchone()  # Obté el primer resultat si existeix
+
+    if resultado:
+        # Si el registre ja existeix, només s'actualitza la data d'edició
+        id_existente = resultado[0]
+        cursor.execute("""
+        UPDATE imagenes
+        SET fecha_edicion = CURRENT_TIMESTAMP
+        WHERE id = ?
+        """, (id_existente,))
+        print(f"Registro existente actualizado (ID: {id_existente}).")
+    else:
+        # Si no existeix, inserta un nou registre amb la ruta i el nom
+        cursor.execute("""
+        INSERT INTO imagenes (ruta_imagen, nombre_imagen)
+        VALUES (?, ?)
+        """, (ruta_imagen, nombre_imagen))
+        print("Nuevo registro insertado.")
+
+    conn.commit()  # Guarda els canvis a la base de dades
+    conn.close()  # Tanca la connexió amb la base de dades
+
+
+def actualitzar_data_edicio(nombre_imagen):
+    """
+    Actualitza la data d'edició del registre que coincideix amb el nom de la imatge.
+    Si no es troba cap registre, mostra un missatge indicant-ho.
+    """
+    db_path = 'gestor_partitures.db'  # Ruta de la base de dades
+    conn = sqlite3.connect(db_path)  # Estableix la connexió amb la base de dades
+    cursor = conn.cursor()  # Crea un cursor per executar consultes SQL
+
+    # Obté la data actual en format 'YYYY-MM-DD HH:MM:SS'
+    fecha_actual = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    # Actualitza el camp `fecha_edicion` del registre que coincideix amb `nombre_imagen`
+    cursor.execute("""
+    UPDATE imagenes
+    SET fecha_edicion = ?
+    WHERE nombre_imagen = ?
+    """, (fecha_actual, nombre_imagen))
+
+    # Confirma si l'actualització s'ha realitzat amb èxit
+    if cursor.rowcount > 0:
+        print(f"Fecha de edición actualizada para '{nombre_imagen}' a {fecha_actual}.")
+    else:
+        print(f"No se encontró ningún registro con el nombre de imagen '{nombre_imagen}'.")
+
+    conn.commit()  # Guarda els canvis a la base de dades
+    conn.close()  # Tanca la connexió amb la base de dades
+
+
+def mostrar_bd():
+    """
+    Crea una finestra per mostrar el contingut de la base de dades.
+    La finestra permet cercar registres pel nom de la imatge, refrescar el contingut 
+    i tancar la vista de manera fàcil.
+    """
+    # Crear una nova finestra per mostrar la base de dades
+    ventana = tk.Toplevel(root)
+    ventana.title("Contingut de la Base de Dades")  # Títol de la finestra
+    ventana.geometry("800x400")  # Mida inicial de la finestra
+    ventana.configure(bg="#1f1f2e")  # Configuració del color de fons
+
+    # Etiqueta i camp d'entrada per a la cerca
+    label_busqueda = tk.Label(ventana, text="Cerca pel Nom:", bg="#1f1f2e", fg="white", font=("Arial", 12))
+    label_busqueda.pack(pady=5)
+
+    entry_busqueda = ttk.Entry(ventana, width=30)  # Camp d'entrada de text
+    entry_busqueda.pack(pady=5)
+
+    def buscar():
+        """Filtra els resultats segons el nom de la imatge introduït."""
+        nombre_buscar = entry_busqueda.get().strip()  # Obté el text del camp d'entrada
+        for row in tree.get_children():  # Esborra les dades actuals del Treeview
+            tree.delete(row)
+
+        conn = sqlite3.connect(db_path)  # Conexió a la base de dades
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM imagenes WHERE nombre_imagen LIKE ?", ('%' + nombre_buscar + '%',))  # Cerca parcial
+        registros = cursor.fetchall()
+        conn.close()
+
+        for registro in registros:  # Inserta els resultats filtrats al Treeview
+            tree.insert("", tk.END, values=registro)
+
+    def refrescar():
+        """Recupera tots els registres de la base de dades i actualitza el Treeview."""
+        entry_busqueda.delete(0, tk.END)  # Neteja el camp de cerca
+        for row in tree.get_children():  # Esborra les dades actuals del Treeview
+            tree.delete(row)
+
+        conn = sqlite3.connect(db_path)  # Conexió a la base de dades
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM imagenes")  # Recupera tots els registres
+        registros = cursor.fetchall()
+        conn.close()
+
+        for registro in registros:  # Inserta tots els registres al Treeview
+            tree.insert("", tk.END, values=registro)
+
+    def obrir_imatge_des_de_base(event):
+        """
+        Obre la imatge seleccionada al fer doble clic en una fila del Treeview.
+        """
+        item = tree.selection()  # Obté l'ítem seleccionat
+        if item:
+            ruta_seleccionada = tree.item(item, 'values')[1]  # La segona columna conté la ruta de la imatge
+            if os.path.exists(ruta_seleccionada):  # Comprova si la ruta és vàlida
+                carregar_imatge(ruta_seleccionada)  # Crida a la funció per carregar la imatge
+            else:
+                messagebox.showerror("Error", f"No s'ha trobat la ruta: {ruta_seleccionada}")        
+
+    # Crear el Treeview per mostrar els registres
+    tree = ttk.Treeview(ventana, columns=("ID", "Ruta Imatge", "Nom Imatge", "Data Creació", "Data Edició"), show="headings")
+    tree.heading("ID", text="ID")  # Capçalera de columna
+    tree.heading("Ruta Imatge", text="Ruta Imatge")
+    tree.heading("Nom Imatge", text="Nom Imatge")
+    tree.heading("Data Creació", text="Data Creació")
+    tree.heading("Data Edició", text="Data Edició")
+
+    # Configuració d'amplades de columnes
+    tree.column("ID", width=50, anchor="center")
+    tree.column("Ruta Imatge", width=250)
+    tree.column("Nom Imatge", width=150)
+    tree.column("Data Creació", width=150)
+    tree.column("Data Edició", width=150)
+
+    # Inserció del Treeview al disseny
+    tree.pack(fill="both", expand=True, padx=10, pady=10)
+
+    # Connectar l'esdeveniment de doble clic al Treeview
+    tree.bind("<Double-1>", obrir_imatge_des_de_base)
+
+    # Recupera tots els registres inicials de la base de dades
+    db_path = 'gestor_partitures.db'
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM imagenes")
+    registros = cursor.fetchall()
+    conn.close()
+
+    # Inserta els registres inicials al Treeview
+    for registro in registros:
+        tree.insert("", tk.END, values=registro)
+
+    # Botó per executar la cerca
+    btn_buscar = ttk.Button(ventana, text="Cercar", command=buscar)
+    btn_buscar.pack(pady=5)
+
+    # Botó per refrescar els resultats
+    btn_refrescar = ttk.Button(ventana, text="Refrescar", command=refrescar)
+    btn_refrescar.pack(pady=5)
+
+    # Botó per tancar la finestra
+    btn_cerrar = ttk.Button(ventana, text="Tancar", command=ventana.destroy)
+    btn_cerrar.pack(pady=10)
+
 
 ##########################################################################################################################################
 #######################################        CREACIÓ INTERFÍCIE PRINCIPAL      #########################################################
 ##########################################################################################################################################
-
-# Importació de llibreries necessàries
-import tkinter as tk  # Llibreria per crear interfícies gràfiques
-from tkinter import ttk, messagebox  # ttk per estils avançats, messagebox per mostrar missatges emergents
 
 # Creació de la finestra principal
 root = tk.Tk()
@@ -490,14 +791,11 @@ menu_bar = tk.Menu(root)
 file_menu = tk.Menu(menu_bar, tearoff=0, bg="#2c2c3c", fg="white", activebackground="#6c63ff")
 file_menu.add_command(label="Obrir", command=obrir_imatge)  # Funció per obrir imatges
 file_menu.add_command(label="Guardar", command=guardar_musescore)  # Funció per guardar
+file_menu.add_command(label="Veure BaseDades", command=mostrar_bd)  # Funció per veure els registres de la BD
+file_menu.add_command(label="Primer pla", command=toggle_on_top)  # Desactivar o activar el primer pla de la meva app  
 file_menu.add_separator()
 file_menu.add_command(label="Sortir", command=root.quit)
 menu_bar.add_cascade(label="Arxiu", menu=file_menu)
-
-# Menú Editar
-edit_menu = tk.Menu(menu_bar, tearoff=0, bg="#2c2c3c", fg="white", activebackground="#6c63ff")
-edit_menu.add_command(label="Retallar", command=retallar)  # Funció per retallar
-menu_bar.add_cascade(label="Editar", menu=edit_menu)
 
 # Menú Ajuda
 help_menu = tk.Menu(menu_bar, tearoff=0, bg="#2c2c3c", fg="white", activebackground="#6c63ff")
@@ -549,13 +847,12 @@ nav_label.pack(anchor="w", pady=5)
 # Botons de navegació
 reset_button = ttk.Button(nav_section, text="Imatge Completa", command=tornar_a_imatge_completa)
 reset_button.pack(side=tk.LEFT, padx=5)
+reset_button = ttk.Button(nav_section, text="Activar Marca", command=activar_desactivar_marca)
+reset_button.pack(side=tk.LEFT, padx=5)
 prev_button = ttk.Button(nav_section, text="←", command=lambda: navegar("prev"))
 prev_button.pack(side=tk.LEFT, padx=2)
-
-# Indicador de línia
 line_counter_label = tk.Label(nav_section, text="Línia: 0", bg="#1f1f2e", fg="white", font=("Arial", 12, "bold"))
 line_counter_label.pack(side=tk.LEFT, padx=10)
-
 next_button = ttk.Button(nav_section, text="→", command=lambda: navegar("next"))
 next_button.pack(side=tk.LEFT, padx=2)
 
@@ -570,10 +867,9 @@ image_label.bind("<Button-5>", lambda e: aplicar_zoom(type("Event", (object,), {
 root.mainloop()
 
 
-
-
-###FUNCIONS FINALMENT NO USADES JA SIGUI PER QUE FALLEN O PERQUÈ AL FINAL NO HAN SIGUT NECESSÀRIES:
-
+##################################################################################################################
+#######################    FUNCIONS FINALMENT NO USADES PERQUÈ AL FINAL NO HAN SIGUT NECESSÀRIES #################
+##################################################################################################################
 '''
 convertir_mscz_a_musicxml() ha sigut part d'una implementacio que s'anava a usar de cara a unificar directament arxius mscz. De totes maneres, 
 la utilitat i funció del pas a xml si va.
@@ -589,52 +885,6 @@ def convertir_mscz_a_musicxml(musescore_path, input_mscz, output_folder):
     except subprocess.CalledProcessError as e:
         print(f"Error en convertir {input_mscz}: {e}")
         return None
-
-'''
-Falla.
-'''
-def unificar_musicxml(self):
-    global imagen_actual_base  # Usar la variable global
-    # Ruta fija de la carpeta donde están los archivos .musicxml
-    musescore_folder = r"C:\Users\abel\Desktop\UNI\TFG\exemplesMusicXML\exemplesMusicXML\CVCDOL.S01P01\MUSICXML"
-
-    # Verificar si la carpeta MUSESCORE existe
-    if not os.path.exists(musescore_folder):
-        messagebox.showinfo("Información", f"No se encontró la carpeta MUSICXML en {musescore_folder}.")
-        return
-
-    # Buscar archivos .musicxml en la carpeta MUSESCORE que coincidan con el nombre base
-    archivos_xml = [
-        os.path.join(musescore_folder, file)
-        for file in os.listdir(musescore_folder)
-        if file.endswith(".musicxml") and file.startswith(imagen_actual_base)
-    ]
-
-    # Si no se encontraron archivos MusicXML
-    if not archivos_xml:
-        messagebox.showinfo("Información", "No se encontraron archivos MusicXML para unificar.")
-        return
-
-    # Crear un flujo vacío donde se añadirán las partituras
-    partitura_unida = stream.Score()
-
-    # Iterar sobre cada archivo y agregar su contenido al flujo
-    for archivo in archivos_xml:
-        try:
-            partitura = converter.parse(archivo)  # Cargar el archivo MusicXML
-            partitura_unida.append(partitura)    # Añadir al flujo
-        except Exception as e:
-            messagebox.showwarning("Error", f"No se pudo procesar {archivo}: {str(e)}")
-
-    # Guardar el archivo combinado
-    output_path = os.path.join(musescore_folder, "partitura_unida.musicxml")
-    output_path = os.path.normpath(output_path)  # Normalizar ruta de salida
-
-    try:
-        partitura_unida.write('musicxml', fp=output_path)
-        messagebox.showinfo("Éxito", f"Archivos unidos y guardados como '{output_path}'")
-    except Exception as e:
-        messagebox.showwarning("Error", f"No se pudo guardar la partitura unificada: {str(e)}")
 
 
 
