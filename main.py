@@ -1,12 +1,18 @@
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
+from tkinter.filedialog import askopenfilename
+
 from PIL import Image, ImageTk, ImageDraw, ImageEnhance
 import subprocess, os, re, time, pyautogui
 import pygetwindow as gw
 from music21 import converter, stream
 import sqlite3
 import os
+import json
 from datetime import datetime
+
+
+CONFIG_FILE = "config.json"
 
 # VARIABLES GLOBALS
 # Variables per emmagatzemar l'estat de la imatge i retalls
@@ -110,13 +116,51 @@ def obrir_musescore(path):
     executar_musescore(partituras)
 
 
+# Función para cargar la ruta guardada
+def load_musescore_path():
+    if os.path.exists(CONFIG_FILE):
+        with open(CONFIG_FILE, "r") as f:
+            config = json.load(f)
+            return config.get("musescore_path")
+    return None
+
+# Función para guardar la ruta en un archivo de configuración
+def save_musescore_path(path):
+    with open(CONFIG_FILE, "w") as f:
+        json.dump({"musescore_path": path}, f)
+
+# Función para seleccionar el ejecutable de MuseScore con un cuadro de diálogo
+def select_musescore():
+    print("Selecciona el archivo ejecutable de MuseScore...")
+    tk.Tk().withdraw()  # Correcto: Usa tk.Tk() para crear la ventana principal y ocultarla
+    file_path = askopenfilename(
+        title="Seleccionar ejecutable de MuseScore",
+        filetypes=[("Archivos ejecutables", "*.exe")],
+        initialdir="C:/Program Files"  # Ruta inicial sugerida
+    )
+    return file_path if file_path else None        
+
+
+# Función para ejecutar MuseScore con los archivos seleccionados
 def executar_musescore(lista_archivos):
     """
-    Obre els arxius MusicXML en MuseScore.
+    Abre los archivos MusicXML en MuseScore.
+    Si la ruta no está configurada, permite seleccionarla con un cuadro de diálogo.
+    Jo la tinc en: "C:/Program Files/MuseScore 4/bin/MuseScore4.exe" 
     """
-    musescore_path = "C:/Program Files/MuseScore 4/bin/MuseScore4.exe"  # Ruta fixa de MuseScore
+    musescore_path = load_musescore_path()  # Intentar cargar la ruta desde configuración
+    if not musescore_path or not os.path.exists(musescore_path):  # Si no existe, pedirla
+        musescore_path = select_musescore()
+        if musescore_path:
+            save_musescore_path(musescore_path)  # Guardar la ruta para el futuro
+        else:
+            print("No se seleccionó un ejecutable de MuseScore. Abortando.")
+            return  # Salir si no se selecciona una ruta válida
+
+    # Ejecutar MuseScore con los archivos proporcionados
     for archivo in lista_archivos:
-        subprocess.Popen([musescore_path, archivo])  # Executa MuseScore amb l'arxiu seleccionat
+        subprocess.Popen([musescore_path, archivo])  # Abre MuseScore con el archivo
+        print(f"Abriendo {archivo} con MuseScore...")
 
 
 def guardar_musescore():
