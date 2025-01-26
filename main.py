@@ -34,14 +34,39 @@ drag_data = {"x": 0, "y": 0, "image_offset": (0, 0)}  # Informació de l'estat d
 def obrir_imatge():
     """
     Obre una finestra de diàleg per seleccionar una imatge.
-    Carrega la imatge seleccionada i obre els fitxers de MuseScore corresponents.
+    Carrega la imatge seleccionada, obre els fitxers de MuseScore corresponents,
+    i tanca les instàncies de MuseScore de la partitura anterior amb confirmació.
     """
-    global nom_imatge
+    global nom_imatge,current_image
+
     # Obre un diàleg per seleccionar arxius d'imatge
     file_path = filedialog.askopenfilename(filetypes=[("Arxius d'imatge", "*.png;*.jpg;*.jpeg")])
     nom_imatge = os.path.splitext(os.path.basename(file_path))[0]  # Guarda el nom de la imatge sense extensió
 
-    if file_path:
+    if current_image:
+        # Mostrar un missatge per confirmar el tancament de MuseScore
+        resposta = messagebox.askyesno(
+            "Confirmació de tancament",
+            "S'estan carregant noves partitures. Has guardat tots els canvis a de l'anterior?\n"
+            "Si continues, es tancaran les instàncies actuals i s'obriran les noves."
+        )
+        if resposta:  # Si l'usuari confirma
+            tancar_musescore()  # Tanca MuseScore de la partitura anterior
+            messagebox.showinfo(
+                "Carregant nova partitura",
+                f"S'han tancat les instàncies de MuseScore de la partitura anterior. Carregant la nova partitura: {nom_imatge}."
+            )
+
+            # Carrega la nova imatge i obre els fitxers de MuseScore associats
+            carregar_imatge(file_path)  # Carrega la imatge seleccionada
+            obrir_musescore(file_path)  # Obre MuseScore amb els fitxers relacionats
+            activar_bd()
+            insertar_o_actualizar(file_path, nom_imatge)
+        else:
+            # Si l'usuari cancel·la, no es tanca res i es manté la imatge anterior
+            messagebox.showinfo("Operació cancel·lada", "No s'ha carregat cap nova imatge ni s'han tancat les instàncies de MuseScore.")
+    else:
+        # Carrega la nova imatge i obre els fitxers de MuseScore associats
         carregar_imatge(file_path)  # Carrega la imatge seleccionada
         obrir_musescore(file_path)  # Obre MuseScore amb els fitxers relacionats
         activar_bd()
@@ -615,7 +640,7 @@ def sortir():
     """
     resposta = messagebox.askyesno(
         "Confirmació de tancament",
-        "Assegura't que has guardat tots els canvis!.\nSegur que vols tancar l'aplicació i MuseScore?"
+        "T'has assegura't que has guardat tots els canvis de la partitura treballada?"
     )
     if resposta:  
         tancar_musescore()  # Tanca MuseScore
