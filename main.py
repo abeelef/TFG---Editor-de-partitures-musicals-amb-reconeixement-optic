@@ -5,6 +5,7 @@ from PIL import Image, ImageTk, ImageDraw, ImageEnhance
 import subprocess, os, re, time, pyautogui
 import pygetwindow as gw
 from music21 import converter, stream
+import psutil
 import sqlite3
 import os
 import json
@@ -52,7 +53,7 @@ def carregar_imatge(path):
     global original_image, current_image, retall_lines, rectangle_y, viewing_retall, rectangle_height, marca_coords
     try:
         original_image = Image.open(path)
-        original_image.thumbnail((1100, 650))  # MIDA DE LA FOTO. S'HA AUGMENTAT PER LES PROVES, COMENTARI RECORDATORI!
+        original_image.thumbnail((820, 950))  # MIDA DE LA FOTO. S'HA AUGMENTAT PER LES PROVES, COMENTARI RECORDATORI
         current_image = original_image.copy()
 
         retall_lines = []
@@ -122,7 +123,7 @@ def obrir_musescore(path):
         return
 
     # Obre MuseScore amb les partitures trobades
-    #executar_musescore(partituras)  #ACTIVAR AL ACABAR PROVES
+    executar_musescore(partituras)  #ACTIVAR O DESACTIVAR PER FER PROVES MÉS RÀPID
 
 
 # Función para cargar la ruta guardada
@@ -325,6 +326,7 @@ def activar_desactivar_marca():
         root.unbind("<Right>")
         mostrar_imatge(current_image)
         marca_coords = None  # Reiniciar les coordenades de la marca
+        messagebox.showinfo("Marca Desactivada", "La marca s'ha desactivat correctament.")
 
 
 def moure_marca(event):
@@ -593,6 +595,31 @@ def actualizar_zoom_drag():
         
         mostrar_imatge(centered_image)  # Mostrar la imatge final al canvas
 
+
+def tancar_musescore():
+    """
+    Tanca tots els processos de MuseScore oberts.
+    """
+    for proc in psutil.process_iter(['name']):
+        try:
+            if "MuseScore" in proc.info['name']:
+                proc.terminate()  # Intenta finalitzar el procés
+                proc.wait(timeout=5)  # Espera que el procés es tanqui
+                print(f"Procés {proc.info['name']} tancat.")
+        except Exception as e:
+            print(f"No s'ha pogut tancar el procés: {e}")
+
+def sortir():
+    """
+    Mostra un missatge de confirmació abans de tancar MuseScore i l'aplicació.
+    """
+    resposta = messagebox.askyesno(
+        "Confirmació de tancament",
+        "Assegura't que has guardat tots els canvis!.\nSegur que vols tancar l'aplicació i MuseScore?"
+    )
+    if resposta:  
+        tancar_musescore()  # Tanca MuseScore
+        root.quit()  # Tanca l'aplicació principal
 
 ##########################################################################################################################################
 ################################################   PART DE LA BASE DE DADES      #########################################################
@@ -878,7 +905,7 @@ file_menu.add_command(label="Guardar", command=guardar_musescore)  # Funció per
 file_menu.add_command(label="Veure BaseDades", command=mostrar_bd)  # Funció per veure els registres de la BD
 file_menu.add_command(label="Primer pla", command=toggle_on_top)  # Desactivar o activar el primer pla de la meva app  
 file_menu.add_separator()
-file_menu.add_command(label="Sortir", command=root.quit)
+file_menu.add_command(label="Sortir", command=lambda: sortir())
 menu_bar.add_cascade(label="Arxiu", menu=file_menu)
 
 # Menú Ajuda
