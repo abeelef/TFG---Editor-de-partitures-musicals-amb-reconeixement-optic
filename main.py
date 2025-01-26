@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, filedialog, messagebox
+from tkinter import ttk, filedialog, messagebox,simpledialog
 from tkinter.filedialog import askopenfilename
 from PIL import Image, ImageTk, ImageDraw, ImageEnhance
 import subprocess, os, re, time, pyautogui
@@ -11,7 +11,6 @@ import os
 import json
 from datetime import datetime
 
-
 CONFIG_FILE = "config.json"
 
 # VARIABLES GLOBALS
@@ -19,17 +18,15 @@ CONFIG_FILE = "config.json"
 nom_imatge = None  # Nom de l'arxiu d'imatge seleccionat
 original_image = None  # Imatge original carregada
 current_image = None  # Imatge actual mostrada
-retall_lines = []  # Llista per guardar línies retallades
+retall_lines = {}  # Llista per guardar línies retallades
 current_rectangle = None  # Coordenades del rectangle de retall
 rectangle_y = 100  # Posició vertical inicial del rectangle
 rectangle_height = 50  # Alçada inicial del rectangle
 current_line_index = 0  # Índex de la línia actual per navegar
 viewing_retall = False  # Estat: True si s'està visualitzant un retall
-
 # Variables per al zoom i el drag (arrossegar)
 zoom_level = 1.0  # Nivell inicial de zoom
 drag_data = {"x": 0, "y": 0, "image_offset": (0, 0)}  # Informació de l'estat del drag
-
 
 def obrir_imatge():
     """
@@ -81,7 +78,7 @@ def carregar_imatge(path):
         original_image.thumbnail((820, 950))  # MIDA DE LA FOTO. S'HA AUGMENTAT PER LES PROVES, COMENTARI RECORDATORI
         current_image = original_image.copy()
 
-        retall_lines = []
+        retall_lines = {}
         rectangle_y = 100
         rectangle_height = 50
         viewing_retall = False
@@ -106,6 +103,7 @@ def carregar_imatge(path):
         mostrar_imatge(current_image)  # Assegura que la imatge es mostra encara que hi hagi un error
 
 
+
 def mostrar_imatge(image):
     """
     Mostra la imatge proporcionada en l'etiqueta d'imatge (Tkinter).
@@ -119,6 +117,7 @@ def mostrar_imatge(image):
     # Assigna la imatge a una propietat de l'etiqueta per evitar que es perdi la referència
     # (Això és necessari per evitar que Python elimini l'objecte img de la memòria)
     image_label.image = img
+
 
 
 def obrir_musescore(path):
@@ -151,6 +150,7 @@ def obrir_musescore(path):
     executar_musescore(partituras)  #ACTIVAR O DESACTIVAR PER FER PROVES MÉS RÀPID
 
 
+
 # Función para cargar la ruta guardada
 def load_musescore_path():
     if os.path.exists(CONFIG_FILE):
@@ -159,10 +159,14 @@ def load_musescore_path():
             return config.get("musescore_path")
     return None
 
+
+
 # Función para guardar la ruta en un archivo de configuración
 def save_musescore_path(path):
     with open(CONFIG_FILE, "w") as f:
         json.dump({"musescore_path": path}, f)
+
+
 
 # Función para seleccionar el ejecutable de MuseScore con un cuadro de diálogo
 def select_musescore():
@@ -174,6 +178,7 @@ def select_musescore():
         initialdir="C:/Program Files"  # Ruta inicial sugerida
     )
     return file_path if file_path else None        
+
 
 
 # Función para ejecutar MuseScore con los archivos seleccionados
@@ -196,6 +201,7 @@ def executar_musescore(lista_archivos):
     for archivo in lista_archivos:
         subprocess.Popen([musescore_path, archivo])  # Abre MuseScore con el archivo
         print(f"Abriendo {archivo} con MuseScore...")
+
 
 
 def guardar_musescore():
@@ -222,6 +228,7 @@ def guardar_musescore():
         print(f"No se encontraron ventanas de MuseScore con el archivo que contiene '{nombre_imagen_sin_extension}.musicxml'.")
 
 
+
 def draw_rectangle():
     """
     Dibuixa un rectangle a la imatge actual basat en les coordenades globals.
@@ -234,6 +241,7 @@ def draw_rectangle():
         mostrar_imatge(image_with_rectangle)
 
 
+
 def ajustar_rectangle(delta_y):
     """
     Ajusta la posició vertical del rectangle segons l'increment donat (delta_y).
@@ -243,6 +251,7 @@ def ajustar_rectangle(delta_y):
         rectangle_y = max(0, min(current_image.height - rectangle_height, rectangle_y + delta_y))
         current_rectangle = (0, rectangle_y, current_image.width, rectangle_y + rectangle_height)
         draw_rectangle()  # Actualitza el rectangle a la imatge
+
 
 
 def ajustar_rectangle_personalitzat(event=None):
@@ -278,12 +287,24 @@ def ajustar_rectangle_personalitzat(event=None):
         # Redibuixar el rectangle amb les noves dimensions
         draw_rectangle()
 
+
+
 def retallar():
     """
-    Retalla la part de la imatge dins del rectangle actual i l'afegeix a la llista de línies retallades.
+    Retalla la part de la imatge dins del rectangle actual i la guarda associada a un número de línia.
     """
     global current_rectangle, retall_lines
     if current_rectangle and original_image:
+        # Demana a l'usuari el número de línia
+        numero_linia = simpledialog.askinteger(
+            "Número de línia",
+            "Introdueix el número de línia al qual correspon aquest retall:",
+            parent=root
+        )
+        if numero_linia is None:
+            messagebox.showinfo("Operació cancel·lada", "No s'ha introduït cap número de línia.")
+            return
+
         x1, y1, x2, y2 = current_rectangle
 
         # Ajusta les coordenades segons l'escala original
@@ -296,10 +317,13 @@ def retallar():
         x2 = int(x2 * scale_x)
         y2 = int(y2 * scale_y)
 
-        # Retalla la imatge i l'afegeix a la llista
+        # Retalla la imatge
         cropped = original_image.crop((x1, y1, x2, y2))
-        retall_lines.append(cropped)
-        messagebox.showinfo("Retall", f"L\u00ednia retallada i afegida. Total l\u00ednies: {len(retall_lines)}")
+
+        # Actualitza o afegeix el retall associat a la línia
+        retall_lines[numero_linia] = cropped
+        messagebox.showinfo("Retall", f"Retall afegit o actualitzat per la línia {numero_linia}.")
+
 
 
 def activar_desactivar_marca():
@@ -354,6 +378,7 @@ def activar_desactivar_marca():
         messagebox.showinfo("Marca Desactivada", "La marca s'ha desactivat correctament.")
 
 
+
 def moure_marca(event):
     """
     Mou la marca en la direcció indicada per les fletxes del teclat.
@@ -393,6 +418,7 @@ def moure_marca(event):
     actualitzar_marca()
 
 
+
 def actualitzar_marca():
     """
     Redibuixa la imatge amb la marca a les coordenades actuals.
@@ -418,29 +444,33 @@ def actualitzar_marca():
     mostrar_imatge(image_with_mark)
 
 
-def eliminar_ultim_retall():
-    '''
-    Elimina l'últim retall de la llista de retalls (retall_lines).
-    Si no queden retalls després d'eliminar-lo, es torna a mostrar la imatge original.
-    Mostra missatges informatius segons l'estat de la llista de retalls.
-    '''
-    global retall_lines, current_image  # Variables globals per gestionar les línies retallades i la imatge actual
-    if retall_lines:  # Comprovar si hi ha línies retallades disponibles
-        # Eliminar l'últim retall de la llista
-        retall_lines.pop()
-        if retall_lines:  # Si encara queden retalls després d'eliminar l'últim
-            # Actualitzar la imatge actual amb el penúltim retall
-            current_image = retall_lines[-1].copy()
-            mostrar_imatge(current_image)  # Mostrar la imatge actualitzada
-            messagebox.showinfo("Retall eliminat", f"S'ha eliminat l'últim retall. Queden {len(retall_lines)} línies.")
-        else:
-            # Si no queden més retalls, tornar a la imatge original
-            current_image = original_image.copy()
-            mostrar_imatge(current_image)
-            messagebox.showinfo("Retalls eliminats", "No queden línies retallades.")
+
+def eliminar_retall():
+    """
+    Elimina el retall associat al número de línia especificat per l'usuari.
+    """
+    global retall_lines
+    if not retall_lines:
+        messagebox.showwarning("Error", "No hi ha retalls disponibles per eliminar.")
+        return
+
+    # Demana a l'usuari el número de línia
+    numero_linia = simpledialog.askinteger(
+        "Eliminar retall",
+        "Introdueix el número de línia del retall que vols eliminar:",
+        parent=root
+    )
+    if numero_linia is None:
+        messagebox.showinfo("Operació cancel·lada", "No s'ha introduït cap número de línia.")
+        return
+
+    # Elimina el retall si existeix
+    if numero_linia in retall_lines:
+        del retall_lines[numero_linia]
+        messagebox.showinfo("Retall eliminat", f"S'ha eliminat el retall de la línia {numero_linia}.")
     else:
-        # Si no hi ha línies per eliminar, mostrar un avís
-        messagebox.showwarning("Error", "No hi ha cap línia retallada per eliminar.")
+        messagebox.showwarning("Error", f"No hi ha cap retall associat a la línia {numero_linia}.")
+
 
 
 def navegar(direccio):
@@ -449,23 +479,31 @@ def navegar(direccio):
     Actualitza la imatge actual segons la direcció i actualitza la interfície.
     '''
     global current_line_index, viewing_retall, current_image  # Variables globals per gestionar la navegació de línies
-    if not retall_lines:  # Comprovar si la llista de retalls està buida
+    if not retall_lines:  # Comprovar si el diccionari de retalls està buit
         messagebox.showwarning("Navegació", "No hi ha línies retallades.")
         return
 
+    # Obtenim els números de línia disponibles de forma ordenada
+    linies_disponibles = sorted(retall_lines.keys())
+
     # Actualitzar l'índex de la línia segons la direcció (prev o next)
     if direccio == "prev":
-        current_line_index = (current_line_index - 1) % len(retall_lines)  # Retrocedir circularment
+        current_line_index = (current_line_index - 1) % len(linies_disponibles)  # Retrocedir circularment
     elif direccio == "next":
-        current_line_index = (current_line_index + 1) % len(retall_lines)  # Avançar circularment
+        current_line_index = (current_line_index + 1) % len(linies_disponibles)  # Avançar circularment
+
+    # Obtenim el número de línia actual segons l'índex
+    linia_actual = linies_disponibles[current_line_index]
 
     viewing_retall = True  # Indicar que s'està visualitzant un retall
-    current_image = retall_lines[current_line_index].copy()  # Actualitzar la imatge amb el retall actual
+    current_image = retall_lines[linia_actual].copy()  # Actualitzar la imatge amb el retall actual
     mostrar_imatge(current_image)  # Mostrar la imatge actualitzada
 
-    # Actualitzar la interfície amb l'índex actual de la línia
-    line_counter_label.config(text=f"Línia: {current_line_index + 1} / {len(retall_lines)}")
-    activar_linea_actual_musescore(current_line_index)  # Activar la finestra de MuseScore per la línia actual
+    # Actualitzar la interfície amb el número de línia actual
+    line_counter_label.config(text=f"Línia: {linia_actual}")
+    activar_linea_actual_musescore(linia_actual)  # Activar la finestra de MuseScore per la línia actual
+
+
 
 
 def activar_linea_actual_musescore(linea_actual):
@@ -474,7 +512,7 @@ def activar_linea_actual_musescore(linea_actual):
     a la línia retallada actual, basant-se en el nom de la imatge i l'índex.
     '''
     # Generar el nom del fitxer segons la línia actual (afegint zeros davant si cal)
-    ventana_buscar = f"{nom_imatge}.{str(linea_actual+1).zfill(2)}.musicxml"  # nom_imatge és la foto actual
+    ventana_buscar = f"{nom_imatge}.{str(linea_actual).zfill(2)}.musicxml"  # nom_imatge és la foto actual
     
     # Filtrar les finestres obertes que coincideixin amb el títol generat
     ventanas_musescore = [
@@ -494,6 +532,7 @@ def activar_linea_actual_musescore(linea_actual):
     # print("Ventanas detectadas:", [ventana.title for ventana in gw.getWindowsWithTitle("")])
 
 
+
 def tornar_a_imatge_completa():
     '''
     Torna a mostrar la imatge original completa, deixant de visualitzar retalls.
@@ -505,6 +544,7 @@ def tornar_a_imatge_completa():
         current_image = original_image.copy()  # Tornar a la imatge original
         mostrar_imatge(current_image)  # Mostrar la imatge original
         line_counter_label.config(text="Línia: 0")  # Reiniciar el comptador de línies a 0
+
 
 
 def ajustar_brillo(value):
@@ -529,6 +569,7 @@ def ajustar_brillo(value):
             enhancer = ImageEnhance.Brightness(original_image)
             current_image = enhancer.enhance(brightness_factor)
             mostrar_imatge(current_image)  # Mostrar la imatge ajustada
+
 
 
 # FUNCIONS PER FER FUNCIONAR EL ZOOM AND DRAG
@@ -557,6 +598,7 @@ def aplicar_zoom(event):
         messagebox.showinfo("Zoom", "De moment el zoom només està disponible en mode de retall!")
 
 
+
 def iniciar_drag(event):
     '''
     Inicia l'operació de "drag" per moure la imatge en el canvas.
@@ -567,6 +609,7 @@ def iniciar_drag(event):
     '''
     drag_data["x"] = event.x  # Coordenada X inicial
     drag_data["y"] = event.y  # Coordenada Y inicial
+
 
 
 def mover_imagen(event):
@@ -589,6 +632,7 @@ def mover_imagen(event):
     offset_x, offset_y = drag_data["image_offset"]
     drag_data["image_offset"] = (offset_x + dx, offset_y + dy)
     actualizar_zoom_drag()  # Aplicar el desplaçament actualitzat a la imatge
+
 
 
 def actualizar_zoom_drag():
@@ -621,6 +665,7 @@ def actualizar_zoom_drag():
         mostrar_imatge(centered_image)  # Mostrar la imatge final al canvas
 
 
+
 def tancar_musescore():
     """
     Tanca tots els processos de MuseScore oberts.
@@ -633,6 +678,8 @@ def tancar_musescore():
                 print(f"Procés {proc.info['name']} tancat.")
         except Exception as e:
             print(f"No s'ha pogut tancar el procés: {e}")
+
+
 
 def sortir():
     """
@@ -687,6 +734,7 @@ def activar_bd():
     conn.close()
 
 
+
 def insertar_o_actualizar(ruta_imagen, nombre_imagen):
     """
     Inserta un nou registre a la base de dades amb la ruta i el nom de la imatge,
@@ -723,6 +771,7 @@ def insertar_o_actualizar(ruta_imagen, nombre_imagen):
     conn.close()  # Tanca la connexió amb la base de dades
 
 
+
 def actualitzar_data_edicio(nombre_imagen):
     """
     Actualitza la data d'edició del registre que coincideix amb el nom de la imatge.
@@ -750,6 +799,7 @@ def actualitzar_data_edicio(nombre_imagen):
 
     conn.commit()  # Guarda els canvis a la base de dades
     conn.close()  # Tanca la connexió amb la base de dades
+
 
 
 def mostrar_bd():
@@ -857,7 +907,6 @@ def mostrar_bd():
     # Botó per tancar la finestra
     btn_cerrar = ttk.Button(ventana, text="Tancar", command=ventana.destroy)
     btn_cerrar.pack(pady=10)
-
 
 ##########################################################################################################################################
 #######################################        CREACIÓ INTERFÍCIE PRINCIPAL      #########################################################
@@ -971,7 +1020,7 @@ adjust_custom_button.pack(side=tk.LEFT, padx=5)
 # Botó per eliminar retalls
 retallar_button = ttk.Button(crop_section, text="Retallar", command=retallar)
 retallar_button.pack(side=tk.LEFT, padx=5)
-retallar_button = ttk.Button(crop_section, text="Eliminar retall", command=eliminar_ultim_retall)
+retallar_button = ttk.Button(crop_section, text="Eliminar retall", command=eliminar_retall)
 retallar_button.pack(side=tk.LEFT, padx=5)
 
 # Secció de Navegació
@@ -1002,10 +1051,10 @@ image_label.bind("<Button-5>", lambda e: aplicar_zoom(type("Event", (object,), {
 # Iniciar el bucle principal de l'aplicació
 root.mainloop()
 
-
 ##################################################################################################################
 #######################    FUNCIONS FINALMENT NO USADES PERQUÈ AL FINAL NO HAN SIGUT NECESSÀRIES #################
 ##################################################################################################################
+
 '''
 convertir_mscz_a_musicxml() ha sigut part d'una implementacio que s'anava a usar de cara a unificar directament arxius mscz. De totes maneres, 
 la utilitat i funció del pas a xml si va.
