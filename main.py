@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from tkinter.filedialog import askopenfilename
-
 from PIL import Image, ImageTk, ImageDraw, ImageEnhance
 import subprocess, os, re, time, pyautogui
 import pygetwindow as gw
@@ -50,25 +49,35 @@ def obrir_imatge():
 
 
 def carregar_imatge(path):
-    """
-    Carrega la imatge seleccionada i inicialitza l'estat de la interfície.
-    """
-    global original_image, current_image, retall_lines, rectangle_y, viewing_retall, rectangle_height
+    global original_image, current_image, retall_lines, rectangle_y, viewing_retall, rectangle_height, marca_coords
     try:
-        # Carregar la imatge i generar-ne una còpia
         original_image = Image.open(path)
-        original_image.thumbnail((700, 450))  # Redueix la mida de la imatge
+        original_image.thumbnail((1100, 650))  # MIDA DE LA FOTO. S'HA AUGMENTAT PER LES PROVES, COMENTARI RECORDATORI!
         current_image = original_image.copy()
-        
-        # Restablir variables globals
+
         retall_lines = []
         rectangle_y = 100
         rectangle_height = 50
         viewing_retall = False
-        
-        mostrar_imatge(current_image)  # Mostra la imatge carregada en la interfície
+
+        # Recuperar les coordenades de la marca des de la base de dades
+        db_path = 'gestor_partitures.db'
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT marca_coords FROM imagenes WHERE nombre_imagen = ?
+        """, (nom_imatge,))
+        result = cursor.fetchone()
+        conn.close()
+
+        if result and result[0]:  # Si hi ha coordenades guardades, les recuperem
+            marca_coords = json.loads(result[0])
+            actualitzar_marca()
+        else:
+            mostrar_imatge(current_image)  # Mostra la imatge si no hi ha marca
     except Exception as e:
         print(f"Error carregant la imatge: {e}")
+        mostrar_imatge(current_image)  # Assegura que la imatge es mostra encara que hi hagi un error
 
 
 def mostrar_imatge(image):
@@ -113,7 +122,7 @@ def obrir_musescore(path):
         return
 
     # Obre MuseScore amb les partitures trobades
-    executar_musescore(partituras)
+    #executar_musescore(partituras)  #ACTIVAR AL ACABAR PROVES
 
 
 # Función para cargar la ruta guardada
@@ -270,7 +279,7 @@ def retallar():
 def activar_desactivar_marca():
     """
     Activa o desactiva la funcionalitat de la marca.
-    La marca es col·loca automàticament al centre de la imatge i es pot moure amb les fletxes del teclat.
+    La marca es col·loca a la darrera posició guardada o al centre de la imatge si no n'hi ha.
     """
     global marca_activa, marca_coords, current_image
 
@@ -282,9 +291,23 @@ def activar_desactivar_marca():
             messagebox.showwarning("Advertència", "No hi ha cap imatge carregada per activar la marca.")
             return
 
-        # Col·locar la marca inicialment al centre de la imatge
-        marca_coords = (current_image.width // 2, current_image.height // 2)
-        actualitzar_marca()  # Mostrar la marca inicial
+        # Recuperar coordenades guardades des de la base de dades
+        db_path = 'gestor_partitures.db'
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT marca_coords FROM imagenes WHERE nombre_imagen = ?
+        """, (nom_imatge,))
+        result = cursor.fetchone()
+        conn.close()
+
+        if result and result[0]:  # Si hi ha coordenades guardades
+            marca_coords = json.loads(result[0])
+        else:
+            # Col·locar la marca al centre si no hi ha coordenades
+            marca_coords = (current_image.width // 2, current_image.height // 2)
+
+        actualitzar_marca()  # Mostrar la marca a la posició adequada
 
         # Informar l'usuari que pot moure la marca amb les fletxes
         messagebox.showinfo("Marca Activa", "La marca està activa. Pots moure-la amb les fletxes del teclat.")
@@ -325,6 +348,19 @@ def moure_marca(event):
     elif event.keysym == "Right":
         x = min(current_image.width, x + 10)
     marca_coords = (x, y)
+
+
+    # Actualitzar les coordenades de la marca a la base de dades
+    db_path = 'gestor_partitures.db'
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("""
+        UPDATE imagenes
+        SET marca_coords = ?
+        WHERE nombre_imagen = ?
+    """, (json.dumps(marca_coords), nom_imatge))  # Convertim les coordenades a format JSON
+    conn.commit()
+    conn.close()
 
     # Actualitzar la imatge amb la marca movent-se
     actualitzar_marca()
@@ -565,34 +601,38 @@ def actualizar_zoom_drag():
 def activar_bd():
     """
     Crea la base de dades i la taula necessària si no existeixen.
-    La base de dades emmagatzema informació sobre les imatges, com ara la seva ruta,
-    nom, data de creació i data de l'última edició.
+    Si la taula ja existeix, comprova que tingui totes les columnes necessàries.
     """
-    # Ruta de la base de dades
     db_path = 'gestor_partitures.db'
 
-    # Comprova si la base de dades ja existeix
-    if os.path.exists(db_path):
-        print("BD ABIERTA")  # Mostra un missatge indicant que la base de dades està disponible
-    else:
-        # Si no existeix, crea la base de dades i la taula
-        conn = sqlite3.connect(db_path)  # Estableix la connexió amb la base de dades
-        cursor = conn.cursor()  # Crea un cursor per executar consultes SQL
+    # Estableix connexió amb la base de dades
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
 
-        # Crea la taula `imagenes` si no existeix
-        cursor.execute("""
-        CREATE TABLE IF NOT EXISTS imagenes (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,  # Clau primària, increment automàtic
-            ruta_imagen TEXT UNIQUE,  # Ruta única per a cada imatge
-            nombre_imagen TEXT UNIQUE,  # Nom de la imatge únic
-            fecha_creacion TEXT DEFAULT CURRENT_TIMESTAMP,  # Data de creació automàtica
-            fecha_edicion TEXT DEFAULT CURRENT_TIMESTAMP  # Data d'edició automàtica
-        )""")
+    # Elimina la taula si és necessari (només en desenvolupament)
+    try:
+        cursor.execute("SELECT marca_coords FROM imagenes LIMIT 1")
+    except sqlite3.OperationalError:
+        # Si la columna no existeix, recreem la taula
+        cursor.execute("DROP TABLE IF EXISTS imagenes")
+        print("Taula eliminada per assegurar que es recrea amb les noves columnes.")
 
-        # Guarda els canvis a la base de dades i tanca la connexió
-        conn.commit()  # Confirma els canvis
-        conn.close()  # Tanca la connexió amb la base de dades
-        print("BD y tabla creada correctamente.")  # Missatge confirmant la creació
+    # Crea la taula amb totes les columnes requerides
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS imagenes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ruta_imagen TEXT UNIQUE,
+        nombre_imagen TEXT UNIQUE,
+        fecha_creacion TEXT DEFAULT CURRENT_TIMESTAMP,
+        fecha_edicion TEXT DEFAULT CURRENT_TIMESTAMP,
+        marca_coords TEXT DEFAULT NULL
+    )
+    """)
+    print("BD i taula creada o actualitzada correctament.")
+    
+    # Tanca la connexió
+    conn.commit()
+    conn.close()
 
 
 def insertar_o_actualizar(ruta_imagen, nombre_imagen):
@@ -825,7 +865,7 @@ image_frame = ttk.Frame(main_frame, style="TFrame")
 image_frame.grid(row=0, column=1, sticky="nsew")
 image_frame.grid_rowconfigure(0, weight=1)
 image_frame.grid_columnconfigure(0, weight=1)
-image_label = tk.Label(image_frame, bg="#2c2c3c", relief=tk.RIDGE, borderwidth=5, width=900, height=700)
+image_label = tk.Label(image_frame, bg="#2c2c3c", relief=tk.RIDGE, borderwidth=5, width=1200, height=900) #TAMANY FOTO PRINCIPAL
 image_label.grid(row=0, column=0, sticky="nsew")
 
 # Creació de la barra de menú
@@ -873,7 +913,7 @@ size_entry.insert(0, "50")
 size_entry.pack(side=tk.LEFT, padx=5)
 size_entry.bind("<Return>", ajustar_rectangle_personalitzat)
 
-adjust_custom_button = ttk.Button(crop_section, text="Aplica mida", command=ajustar_rectangle_personalitzat)
+adjust_custom_button = ttk.Button(crop_section, text="Preparar Retall", command=ajustar_rectangle_personalitzat)
 adjust_custom_button.pack(side=tk.LEFT, padx=5)
 
 # Botó per eliminar retalls
@@ -891,7 +931,7 @@ nav_label.pack(anchor="w", pady=5)
 # Botons de navegació
 reset_button = ttk.Button(nav_section, text="Imatge Completa", command=tornar_a_imatge_completa)
 reset_button.pack(side=tk.LEFT, padx=5)
-reset_button = ttk.Button(nav_section, text="Activar Marca", command=activar_desactivar_marca)
+reset_button = ttk.Button(nav_section, text="Activar/Desactivar Marca", command=activar_desactivar_marca)
 reset_button.pack(side=tk.LEFT, padx=5)
 prev_button = ttk.Button(nav_section, text="←", command=lambda: navegar("prev"))
 prev_button.pack(side=tk.LEFT, padx=2)
