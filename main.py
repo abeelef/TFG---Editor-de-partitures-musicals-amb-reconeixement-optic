@@ -877,13 +877,14 @@ def mostrar_bd():
     """
     Crea una finestra per mostrar el contingut de la base de dades.
     La finestra permet cercar registres pel nom de la imatge, refrescar el contingut 
-    i tancar la vista de manera fàcil.
+    i tancar la vista de manera fàcil. (NO HE FET QUE EN CLICKAR DES D'AQUI TINGUI LA MATEIXA FUNCIONALITAT QUE OBRINTLES DES DE EL BOTÓ OBRIR)
     """
     # Crear una nova finestra per mostrar la base de dades
     ventana = tk.Toplevel(root)
     ventana.title("Contingut de la Base de Dades")  # Títol de la finestra
     ventana.geometry("800x400")  # Mida inicial de la finestra
     ventana.configure(bg="#1f1f2e")  # Configuració del color de fons
+    ventana.attributes("-topmost", True)
 
     # Etiqueta i camp d'entrada per a la cerca
     label_busqueda = tk.Label(ventana, text="Cerca pel Nom:", bg="#1f1f2e", fg="white", font=("Arial", 12))
@@ -905,8 +906,7 @@ def mostrar_bd():
         conn.close()
 
         for registro in registros:  # Inserta els resultats filtrats al Treeview
-            retalls_present = "Sí" if registro[5] else "No"  # Comprovar si té retalls
-            tree.insert("", tk.END, values=registro + (retalls_present,))
+            tree.insert("", tk.END, values=registro)
 
     def refrescar():
         """Recupera tots els registres de la base de dades i actualitza el Treeview."""
@@ -921,8 +921,7 @@ def mostrar_bd():
         conn.close()
 
         for registro in registros:  # Inserta tots els registres al Treeview
-            retalls_present = "Sí" if registro[5] else "No"  # Comprovar si té retalls
-            tree.insert("", tk.END, values=registro + (retalls_present,))
+            tree.insert("", tk.END, values=registro)
 
     def obrir_imatge_des_de_base(event):
         """
@@ -937,13 +936,12 @@ def mostrar_bd():
                 messagebox.showerror("Error", f"No s'ha trobat la ruta: {ruta_seleccionada}")        
 
     # Crear el Treeview per mostrar els registres
-    tree = ttk.Treeview(ventana, columns=("ID", "Ruta Imatge", "Nom Imatge", "Data Creació", "Data Edició", "Té Retalls"), show="headings")
+    tree = ttk.Treeview(ventana, columns=("ID", "Ruta Imatge", "Nom Imatge", "Data Creació", "Data Edició"), show="headings")
     tree.heading("ID", text="ID")  # Capçalera de columna
     tree.heading("Ruta Imatge", text="Ruta Imatge")
     tree.heading("Nom Imatge", text="Nom Imatge")
     tree.heading("Data Creació", text="Data Creació")
     tree.heading("Data Edició", text="Data Edició")
-    tree.heading("Té Retalls", text="Té Retalls")
 
     # Configuració d'amplades de columnes
     tree.column("ID", width=50, anchor="center")
@@ -951,7 +949,6 @@ def mostrar_bd():
     tree.column("Nom Imatge", width=150)
     tree.column("Data Creació", width=150)
     tree.column("Data Edició", width=150)
-    tree.column("Té Retalls", width=100, anchor="center")
 
     # Inserció del Treeview al disseny
     tree.pack(fill="both", expand=True, padx=10, pady=10)
@@ -969,8 +966,7 @@ def mostrar_bd():
 
     # Inserta els registres inicials al Treeview
     for registro in registros:
-        retalls_present = "Sí" if registro[5] else "No"  # Comprovar si té retalls
-        tree.insert("", tk.END, values=registro + (retalls_present,))
+        tree.insert("", tk.END, values=registro)
 
     # Botó per executar la cerca
     btn_buscar = ttk.Button(ventana, text="Cercar", command=buscar)
