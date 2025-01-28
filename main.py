@@ -75,7 +75,7 @@ def carregar_imatge(path):
     global original_image, current_image, retall_lines, rectangle_y, viewing_retall, rectangle_height, marca_coords
     try:
         original_image = Image.open(path)
-        original_image.thumbnail((820, 950))  # MIDA DE LA FOTO. S'HA AUGMENTAT PER LES PROVES, COMENTARI RECORDATORI
+        original_image.thumbnail((820, 950))  # MIDA DE LA FOTO
         current_image = original_image.copy()
 
         retall_lines = {}
@@ -83,21 +83,29 @@ def carregar_imatge(path):
         rectangle_height = 50
         viewing_retall = False
 
-        # Recuperar les coordenades de la marca des de la base de dades
+        # Recuperar les coordenades de la marca i els retalls des de la base de dades
         db_path = 'gestor_partitures.db'
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT marca_coords FROM imagenes WHERE nombre_imagen = ?
+            SELECT marca_coords, retalls FROM imagenes WHERE nombre_imagen = ?
         """, (nom_imatge,))
         result = cursor.fetchone()
         conn.close()
 
-        if result and result[0]:  # Si hi ha coordenades guardades, les recuperem
-            marca_coords = json.loads(result[0])
-            actualitzar_marca()
-        else:
-            mostrar_imatge(current_image)  # Mostra la imatge si no hi ha marca
+        if result:
+            if result[0]:  # Si hi ha coordenades guardades, les recuperem
+                marca_coords = json.loads(result[0])
+                actualitzar_marca()
+
+            if result[1]:  # Si hi ha retalls guardats, els recuperem
+                retalls_guardats = json.loads(result[1])
+                for linia, coordenades in retalls_guardats.items():
+                    x1, y1, x2, y2 = coordenades
+                    retall = original_image.crop((x1, y1, x2, y2))
+                    retall_lines[int(linia)] = retall
+
+        mostrar_imatge(current_image)  # Mostra la imatge si no hi ha marca
     except Exception as e:
         print(f"Error carregant la imatge: {e}")
         mostrar_imatge(current_image)  # Assegura que la imatge es mostra encara que hi hagi un error
@@ -322,6 +330,11 @@ def retallar():
 
         # Actualitza o afegeix el retall associat a la línia
         retall_lines[numero_linia] = cropped
+
+        # Guarda el retall a la base de dades
+        coordenades = [x1, y1, x2, y2]
+        guardar_retall_db(nom_imatge, numero_linia, coordenades)
+
         messagebox.showinfo("Retall", f"Retall afegit o actualitzat per la línia {numero_linia}.")
 
 
@@ -467,6 +480,34 @@ def eliminar_retall():
     # Elimina el retall si existeix
     if numero_linia in retall_lines:
         del retall_lines[numero_linia]
+
+        # Actualitza la base de dades
+        db_path = 'gestor_partitures.db'
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+
+        # Recuperem els retalls existents
+        cursor.execute("""
+            SELECT retalls FROM imagenes WHERE nombre_imagen = ?
+        """, (nom_imatge,))
+        resultat = cursor.fetchone()
+
+        retalls = json.loads(resultat[0]) if resultat and resultat[0] else {}
+
+        # Eliminar el retall de la línia especificada
+        if str(numero_linia) in retalls:
+            del retalls[str(numero_linia)]
+
+        # Guardar els retalls actualitzats a la base de dades
+        cursor.execute("""
+            UPDATE imagenes
+            SET retalls = ?
+            WHERE nombre_imagen = ?
+        """, (json.dumps(retalls), nom_imatge))
+
+        conn.commit()
+        conn.close()
+
         messagebox.showinfo("Retall eliminat", f"S'ha eliminat el retall de la línia {numero_linia}.")
     else:
         messagebox.showwarning("Error", f"No hi ha cap retall associat a la línia {numero_linia}.")
@@ -526,7 +567,8 @@ def activar_linea_actual_musescore(linea_actual):
         print(f"Ventana '{ventana.title}' activada correctament.")
     else:
         # Si no es troba la finestra, mostrar un missatge per consola
-        print(f"No s'ha trobat la finestra per {ventana_buscar}. Revisa manualment.")
+        print(f"No s'ha trobat la finestra per {ventana_buscar}. Revisa manualment.")   
+        messagebox.showwarning("Finestra no trobada", f"No s'ha trobat la finestra per {ventana_buscar}. Revisa manualment.")
     
     # Per depuració: mostrar totes les finestres detectades per `gw`
     # print("Ventanas detectadas:", [ventana.title for ventana in gw.getWindowsWithTitle("")])
@@ -697,6 +739,34 @@ def sortir():
 ################################################   PART DE LA BASE DE DADES      #########################################################
 ##########################################################################################################################################
 
+
+def guardar_retall_db(nom_imatge, numero_linia, coordenades):
+    db_path = 'gestor_partitures.db'
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    # Recuperem els retalls existents
+    cursor.execute("""
+        SELECT retalls FROM imagenes WHERE nombre_imagen = ?
+    """, (nom_imatge,))
+    resultat = cursor.fetchone()
+
+    retalls = json.loads(resultat[0]) if resultat and resultat[0] else {}
+
+    # Afegim o actualitzem el retall
+    retalls[numero_linia] = coordenades
+
+    # Guardem els retalls actualitzats a la base de dades
+    cursor.execute("""
+        UPDATE imagenes
+        SET retalls = ?
+        WHERE nombre_imagen = ?
+    """, (json.dumps(retalls), nom_imatge))
+
+    conn.commit()
+    conn.close()
+
+
 def activar_bd():
     """
     Crea la base de dades i la taula necessària si no existeixen.
@@ -724,11 +794,12 @@ def activar_bd():
         nombre_imagen TEXT UNIQUE,
         fecha_creacion TEXT DEFAULT CURRENT_TIMESTAMP,
         fecha_edicion TEXT DEFAULT CURRENT_TIMESTAMP,
-        marca_coords TEXT DEFAULT NULL
+        marca_coords TEXT DEFAULT NULL,
+        retalls TEXT DEFAULT NULL
     )
     """)
     print("BD i taula creada o actualitzada correctament.")
-    
+
     # Tanca la connexió
     conn.commit()
     conn.close()
@@ -834,7 +905,8 @@ def mostrar_bd():
         conn.close()
 
         for registro in registros:  # Inserta els resultats filtrats al Treeview
-            tree.insert("", tk.END, values=registro)
+            retalls_present = "Sí" if registro[5] else "No"  # Comprovar si té retalls
+            tree.insert("", tk.END, values=registro + (retalls_present,))
 
     def refrescar():
         """Recupera tots els registres de la base de dades i actualitza el Treeview."""
@@ -849,7 +921,8 @@ def mostrar_bd():
         conn.close()
 
         for registro in registros:  # Inserta tots els registres al Treeview
-            tree.insert("", tk.END, values=registro)
+            retalls_present = "Sí" if registro[5] else "No"  # Comprovar si té retalls
+            tree.insert("", tk.END, values=registro + (retalls_present,))
 
     def obrir_imatge_des_de_base(event):
         """
@@ -864,12 +937,13 @@ def mostrar_bd():
                 messagebox.showerror("Error", f"No s'ha trobat la ruta: {ruta_seleccionada}")        
 
     # Crear el Treeview per mostrar els registres
-    tree = ttk.Treeview(ventana, columns=("ID", "Ruta Imatge", "Nom Imatge", "Data Creació", "Data Edició"), show="headings")
+    tree = ttk.Treeview(ventana, columns=("ID", "Ruta Imatge", "Nom Imatge", "Data Creació", "Data Edició", "Té Retalls"), show="headings")
     tree.heading("ID", text="ID")  # Capçalera de columna
     tree.heading("Ruta Imatge", text="Ruta Imatge")
     tree.heading("Nom Imatge", text="Nom Imatge")
     tree.heading("Data Creació", text="Data Creació")
     tree.heading("Data Edició", text="Data Edició")
+    tree.heading("Té Retalls", text="Té Retalls")
 
     # Configuració d'amplades de columnes
     tree.column("ID", width=50, anchor="center")
@@ -877,6 +951,7 @@ def mostrar_bd():
     tree.column("Nom Imatge", width=150)
     tree.column("Data Creació", width=150)
     tree.column("Data Edició", width=150)
+    tree.column("Té Retalls", width=100, anchor="center")
 
     # Inserció del Treeview al disseny
     tree.pack(fill="both", expand=True, padx=10, pady=10)
@@ -894,7 +969,8 @@ def mostrar_bd():
 
     # Inserta els registres inicials al Treeview
     for registro in registros:
-        tree.insert("", tk.END, values=registro)
+        retalls_present = "Sí" if registro[5] else "No"  # Comprovar si té retalls
+        tree.insert("", tk.END, values=registro + (retalls_present,))
 
     # Botó per executar la cerca
     btn_buscar = ttk.Button(ventana, text="Cercar", command=buscar)
