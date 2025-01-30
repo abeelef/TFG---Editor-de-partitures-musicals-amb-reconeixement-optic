@@ -72,6 +72,10 @@ def obrir_imatge():
 
 
 def carregar_imatge(path):
+    """
+    Carrega una imatge des del fitxer especificat i la mostra a la interfície.
+    També recupera les coordenades de la marca i els retalls associats des de la base de dades.
+    """
     global original_image, current_image, retall_lines, rectangle_y, viewing_retall, rectangle_height, marca_coords
     try:
         original_image = Image.open(path)
@@ -128,6 +132,20 @@ def mostrar_imatge(image):
 
 
 
+def load_musescore_path():
+    """
+    Carrega la ruta de l'executable de MuseScore des d'un fitxer de configuració.
+    Si el fitxer existeix, extreu la clau 'musescore_path'.
+    Si no existeix o no es troba la clau, retorna None.
+    """
+    if os.path.exists(CONFIG_FILE):
+        with open(CONFIG_FILE, "r") as f:
+            config = json.load(f)
+            return config.get("musescore_path")
+    return None
+
+
+
 def obrir_musescore(path):
     """
     Busca fitxers .musicxml a la carpeta MUSICXML i obre'ls amb MuseScore.
@@ -159,55 +177,50 @@ def obrir_musescore(path):
 
 
 
-# Función para cargar la ruta guardada
-def load_musescore_path():
-    if os.path.exists(CONFIG_FILE):
-        with open(CONFIG_FILE, "r") as f:
-            config = json.load(f)
-            return config.get("musescore_path")
-    return None
-
-
-
-# Función para guardar la ruta en un archivo de configuración
 def save_musescore_path(path):
+    """
+    Desa la ruta de l'executable de MuseScore en un fitxer de configuració.
+    Això permet que l'aplicació recordi la ruta per a futures execucions.
+    """
     with open(CONFIG_FILE, "w") as f:
         json.dump({"musescore_path": path}, f)
 
 
 
-# Función para seleccionar el ejecutable de MuseScore con un cuadro de diálogo
 def select_musescore():
-    print("Selecciona el archivo ejecutable de MuseScore...")
-    tk.Tk().withdraw()  # Correcto: Usa tk.Tk() para crear la ventana principal y ocultarla
+    """
+    Obre un quadre de diàleg perquè l'usuari seleccioni manualment
+    l'executable de MuseScore. S'ha hagut d'afegir degut als problemes en els test amb musicoleg
+    """
+    print("Selecciona el fitxer executable de MuseScore...")
+    tk.Tk().withdraw()  # Oculta la finestra principal de Tkinter
     file_path = askopenfilename(
-        title="Seleccionar ejecutable de MuseScore",
-        filetypes=[("Archivos ejecutables", "*.exe")],
-        initialdir="C:/Program Files"  # Ruta inicial sugerida
+        title="Seleccionar executable de MuseScore",
+        filetypes=[("Fitxers executables", "*.exe")],
+        initialdir="C:/Program Files"  # Ruta inicial suggerida
     )
-    return file_path if file_path else None        
+    return file_path if file_path else None       
 
 
 
-# Función para ejecutar MuseScore con los archivos seleccionados
 def executar_musescore(lista_archivos):
     """
-    Abre los archivos MusicXML en MuseScore.
-    Si la ruta no está configurada, permite seleccionarla con un cuadro de diálogo.
-    Jo la tinc en: "C:/Program Files/MuseScore 4/bin/MuseScore4.exe" 
+    Obre els arxius XML en MiuseScore4.
+    Si la ruta no està configurada, permet seleccionarla amba el quadre de diàleg.
+    Jo la tinc en: "C:/Program Files/MuseScore 4/bin/MuseScore4.exe, acostuma a estar aquí per a si feu proves vosaltres." 
     """
-    musescore_path = load_musescore_path()  # Intentar cargar la ruta desde configuración
-    if not musescore_path or not os.path.exists(musescore_path):  # Si no existe, pedirla
+    musescore_path = load_musescore_path()  # Intentar cargar la ruta desde el config
+    if not musescore_path or not os.path.exists(musescore_path):  
         musescore_path = select_musescore()
         if musescore_path:
-            save_musescore_path(musescore_path)  # Guardar la ruta para el futuro
+            save_musescore_path(musescore_path)  # Guardar la ruta 
         else:
             print("No se seleccionó un ejecutable de MuseScore. Abortando.")
-            return  # Salir si no se selecciona una ruta válida
+            return  
 
-    # Ejecutar MuseScore con los archivos proporcionados
+    # Executa el MS4
     for archivo in lista_archivos:
-        subprocess.Popen([musescore_path, archivo])  # Abre MuseScore con el archivo
+        subprocess.Popen([musescore_path, archivo]) 
         print(f"Abriendo {archivo} con MuseScore...")
 
 
@@ -344,10 +357,14 @@ def activar_desactivar_marca():
     Activa o desactiva la funcionalitat de la marca.
     La marca es col·loca a la darrera posició guardada o al centre de la imatge si no n'hi ha.
     """
-    global marca_activa, marca_coords, current_image
+    global marca_activa, marca_coords, current_image, viewing_retall
 
     # Alternar l'estat de la funcionalitat de la marca
     marca_activa = not globals().get('marca_activa', False)
+
+    if viewing_retall:
+        messagebox.showwarning("Advertència", "No pots activar la marca mentre es visualitza un retall. De moment, es una funcionalitat per no perdres en la partitura general.")
+        return
 
     if marca_activa:
         if not current_image:
@@ -739,8 +756,14 @@ def sortir():
 ################################################   PART DE LA BASE DE DADES      #########################################################
 ##########################################################################################################################################
 
-
 def guardar_retall_db(nom_imatge, numero_linia, coordenades):
+    """
+    Desa o actualitza les coordenades d'un retall associat a una imatge a la base de dades.
+    
+    Nota:
+        - Si la imatge no té retalls guardats, es crea un nou registre de retalls.
+        - Si la línia ja té un retall associat, aquest es sobreescriu amb les noves coordenades.
+    """    
     db_path = 'gestor_partitures.db'
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
