@@ -18,7 +18,7 @@ CONFIG_FILE = "config.json"
 nom_imatge = None  # Nom de l'arxiu d'imatge seleccionat
 original_image = None  # Imatge original carregada
 current_image = None  # Imatge actual mostrada
-retall_lines = {}  # Llista per guardar línies retallades
+reancaall_lines = {}  # Llista per guardar línies retallades
 current_rectangle = None  # Coordenades del rectangle de retall
 rectangle_y = 100  # Posició vertical inicial del rectangle
 rectangle_height = 50  # Alçada inicial del rectangle
@@ -48,7 +48,7 @@ def obrir_imatge():
             "Si continues, es tancaran les instàncies actuals i s'obriran les noves."
         )
         if resposta:  # Si l'usuari confirma
-            tancar_musescore()  # Tanca MuseScore de la partitura anterior
+            #tancar_musescore()  # Tanca MuseScore de la partitura anterior
             messagebox.showinfo(
                 "Carregant nova partitura",
                 f"S'han tancat les instàncies de MuseScore de la partitura anterior. Carregant la nova partitura: {nom_imatge}."
@@ -172,6 +172,8 @@ def obrir_musescore(path):
         messagebox.showinfo("Información", "No se encontraron archivos de partituras asociados.")
         return
 
+
+    print("Fitxers que s'obriran:", partituras)
     # Obre MuseScore amb les partitures trobades
     executar_musescore(partituras)  #ACTIVAR O DESACTIVAR PER FER PROVES MÉS RÀPID
 
@@ -611,23 +613,27 @@ def ajustar_brillo(value):
     Ajusta la brillantor de la imatge actual.
     Si s'està visualitzant un retall, ajusta només aquest retall.
     Si no, ajusta la imatge original completa.
-    El valor de brillantor és un factor entre 0 i 2.
     '''
     global original_image, current_image, viewing_retall, retall_lines, current_line_index
+
     if original_image:  # Comprovar si la imatge original existeix
         brightness_factor = float(value) / 50  # Ajustar el factor de brillantor (escala de 0 a 2)
 
         if viewing_retall and retall_lines:  # Si s'està visualitzant un retall
-            # Treballar amb una còpia del retall actual per no modificar l'original
-            original_cropped = retall_lines[current_line_index].copy()
-            enhancer = ImageEnhance.Brightness(original_cropped)  # Inicialitzar l'eina de brillantor
-            adjusted_cropped = enhancer.enhance(brightness_factor)  # Aplicar l'ajust de brillantor
-            mostrar_imatge(adjusted_cropped)  # Mostrar el retall ajustat
+            linies_disponibles = sorted(retall_lines.keys())  # Obtenir les línies ordenades
+            linia_actual = linies_disponibles[current_line_index]  # Número real de línia
+
+            if linia_actual in retall_lines:
+                original_cropped = retall_lines[linia_actual].copy()
+                enhancer = ImageEnhance.Brightness(original_cropped)  # Inicialitzar l'eina de brillantor
+                adjusted_cropped = enhancer.enhance(brightness_factor)  # Aplicar l'ajust de brillantor
+                mostrar_imatge(adjusted_cropped)  # Mostrar el retall ajustat
         else:
             # Ajustar la brillantor de la imatge completa
             enhancer = ImageEnhance.Brightness(original_image)
             current_image = enhancer.enhance(brightness_factor)
             mostrar_imatge(current_image)  # Mostrar la imatge ajustada
+
 
 
 
@@ -698,30 +704,33 @@ def actualizar_zoom_drag():
     '''
     Aplica el nivell de zoom i el desplaçament actuals a la imatge retallada.
     Redimensiona la imatge segons el nivell de zoom i la centra al canvas.
-
-    Nota:
-        Només s'aplica si s'està visualitzant un retall.
     '''
     global zoom_level, drag_data, retall_lines, current_line_index
+
     if retall_lines:  # Comprovar que hi hagi línies retallades
-        cropped = retall_lines[current_line_index]  # Obtenir el retall actual
-        
-        # Redimensionar la imatge segons el nivell de zoom
-        width, height = cropped.size
-        zoomed_image = cropped.resize(
-            (int(width * zoom_level), int(height * zoom_level)), 
-            Image.Resampling.LANCZOS
-        )
-        
-        # Obtenir les dimensions del canvas i el desplaçament actual
-        canvas_width, canvas_height = image_label.winfo_width(), image_label.winfo_height()
-        offset_x, offset_y = drag_data["image_offset"]
-        
-        # Crear una imatge centrada dins del canvas amb el color de fons
-        centered_image = Image.new("RGBA", (canvas_width, canvas_height), (44, 44, 60, 255))
-        centered_image.paste(zoomed_image, (offset_x, offset_y))  # Aplicar la imatge redimensionada
-        
-        mostrar_imatge(centered_image)  # Mostrar la imatge final al canvas
+        linies_disponibles = sorted(retall_lines.keys())
+        linia_actual = linies_disponibles[current_line_index]  # Número real de línia
+
+        if linia_actual in retall_lines:
+            cropped = retall_lines[linia_actual]  # Obtenir el retall actual
+
+            # Redimensionar la imatge segons el nivell de zoom
+            width, height = cropped.size
+            zoomed_image = cropped.resize(
+                (int(width * zoom_level), int(height * zoom_level)), 
+                Image.Resampling.LANCZOS
+            )
+
+            # Obtenir les dimensions del canvas i el desplaçament actual
+            canvas_width, canvas_height = image_label.winfo_width(), image_label.winfo_height()
+            offset_x, offset_y = drag_data["image_offset"]
+
+            # Crear una imatge centrada dins del canvas amb el color de fons
+            centered_image = Image.new("RGBA", (canvas_width, canvas_height), (44, 44, 60, 255))
+            centered_image.paste(zoomed_image, (offset_x, offset_y))  # Aplicar la imatge redimensionada
+
+            mostrar_imatge(centered_image)  # Mostrar la imatge final al canvas
+
 
 
 
